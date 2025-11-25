@@ -1,4 +1,4 @@
-###🐍 Snake Game
+🐍 Snake Game
 
 This repository contains my first JavaScript game: a classic Snake Game built using the HTML Canvas element.
 
