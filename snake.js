@@ -4,3 +4,11 @@ const GREEN_WICKED = "#1b5e20";
 
 const canvas = document.getElementById("snakeGame");
 const ctx = canvas.getContext("2d");
+
+//game square
+ctx.fillStyle = PINK_LIGHT;
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+// Border (hot pink!)
+ctx.strokeStyle = PINK_HOT;
+ctx.lineWidth = 6;
+ctx.strokeRect(0, 0, canvas.width, canvas.height);
