@@ -5,6 +5,12 @@ const GREEN_WICKED = "#1b5e20";
 const canvas = document.getElementById("snakeGame");
 const ctx = canvas.getContext("2d");
 
+
+
+ctx.shadowColor = GREEN_WICKED;
+ctx.shadowBlur = 15;
+ctx.shadowOffsetX = 6;
+ctx.shadowOffsetY = 6;
 //game square
 ctx.fillStyle = PINK_LIGHT;
 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -12,3 +18,4 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.strokeStyle = PINK_HOT;
 ctx.lineWidth = 6;
 ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
