@@ -1,0 +1,71 @@
+/* 🎭 WICKED TEAM COLOR PALETTE — because pink + green = ✨magic✨ */
+:root {
+  --pink-light: #fce4ec;    /* soft pink background: Glinda approves 🩷 */
+  --green-wicked: #1b5e20;  /* the one and only Wicked green 💚 */
+  --black: #000000;         /* dramatic contrast, very Broadway */
+  --white: #ffffff;         /* classic, reliable, like good old HTML */
+}
+
+/* 🌸 GENERAL STYLING — */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: var(--pink-light);   /* Glinda’s magical pink */
+  color: var(--green-wicked);      /* Elphaba’s signature green */
+  text-align: center;
+
+  /* keeps everything centered*/
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✨ TITLE  */
+h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: var(--green-wicked);
+  text-shadow: 2px 2px var(--black);  /* dramatic stage shadow */
+}
+
+/* 📜 SUBTITLE  */
+.subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  max-width: 500px;
+  line-height: 1.5;
+  color: var(--black);  /* contrast for accessibility, because we care 💛 */
+}
+
+/* 🎮 BUTTON */
+.button {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  background: var(--green-wicked);  /* Elphaba */
+  color: var(--white);
+
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.2s;
+  border: 3px solid var(--black);
+}
+
+/* BUTTON HOVER */
+.button:hover {
+  background: var(--black);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+/*  FOOTER  */
+footer {
+  margin-top: 50px;
+  font-size: 0.9rem;
+  color: var(--green-wicked);
+  opacity: 0.85; }
