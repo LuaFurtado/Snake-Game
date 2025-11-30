@@ -214,5 +214,6 @@ const startBtn = document.getElementById("startBtn");
 
 startBtn.addEventListener("click", () => {
   startBtn.disabled = true;
+   startBtn.style.display = "none"; 
   gameLoop();
 });
