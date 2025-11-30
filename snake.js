@@ -205,4 +205,11 @@ function getValidFoodPosition() {
 }
 
 //START GAME
-gameLoop();
+//gameLoop();
+// START GAME BUTTON
+const startBtn = document.getElementById("startBtn");
+
+startBtn.addEventListener("click", () => {
+  startBtn.disabled = true;
+  gameLoop();
+});
