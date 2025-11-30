@@ -64,28 +64,33 @@ function gameLoop() {
   changeSnakePosition();
 
   // >>> Check if snake head is on the food
-if (headX === foodX && headY === foodY) {
-  ateFood = true;
+  if (headX === foodX && headY === foodY) {
+    ateFood = true;
 
-  foodX = Math.floor(Math.random() * tileCountX);
-  foodY = Math.floor(Math.random() * tileCountY);
+    const newFood = getValidFoodPosition();
+    foodX = newFood.x;
+    foodY = newFood.y;
 
-  console.log("Snake ate the food!");
-} else {
-  ateFood = false;
-}
-
+    console.log("Snake ate the food!");
+  } else {
+    ateFood = false;
+  }
 
   // >>> build new head segment
   const newHead = { x: headX, y: headY };
+
+  // >>> check self collision BEFORE unshift
+  if (checkSelfCollision(newHead)) {
+    return gameOver();
+  }
 
   // >>> put new head at front of snake
   snake.unshift(newHead);
 
   // >>> for now: always remove tail (snake stays size 1)
   if (!ateFood) {
-  snake.pop();
-   }
+    snake.pop();
+  }
 
   drawBoard();
   drawSnake();
@@ -97,7 +102,7 @@ if (headX === foodX && headY === foodY) {
   setTimeout(gameLoop, 1000 / speed);
 }
 
-function changeSnakePosition(){
+function changeSnakePosition() {
   // >>> needed: move head according to velocity
   headX = headX + xVelocity;
   headY = headY + yVelocity;
@@ -107,11 +112,18 @@ function changeSnakePosition(){
 
   if (headY >= tileCountY) headY = 0;
   if (headY < 0) headY = tileCountY - 1;
+}
 
-  // Why no else statements?
-  // Because each boundary must be checked independently:
-  // the snake can cross left/right or top/bottom on any frame.
-  // Using else would skip the other checks and break the wrap-around logic.
+// >>> ADD THIS FUNCTION
+function checkSelfCollision(newHead) {
+  // if ANY segment of the snake has the same x,y of the head → collision
+  return snake.some(segment => segment.x === newHead.x && segment.y === newHead.y);
+}
+
+// >>> ADD THIS FUNCTION
+function gameOver() {
+  alert("Game Over!");
+  document.location.reload();
 }
 
 //INPUT HANDLING
@@ -152,6 +164,7 @@ function drawFood() {
   ctx.fillStyle = PINK_HOT;  
   ctx.fillRect(foodX * tileSize, foodY * tileSize, tileSize, tileSize);
 }
+
 function getValidFoodPosition() {
   let newX, newY;
 
