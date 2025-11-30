@@ -207,6 +207,9 @@ function getValidFoodPosition() {
 //START GAME
 //gameLoop();
 // START GAME BUTTON
+document.addEventListener("DOMContentLoaded", () => {
+  drawBoard();
+});
 const startBtn = document.getElementById("startBtn");
 
 startBtn.addEventListener("click", () => {
