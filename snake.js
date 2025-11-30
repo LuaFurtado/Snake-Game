@@ -1,4 +1,3 @@
-
 //CONSTANTS & CANVAS SETUP
 
 const PINK_LIGHT = "#fce4ec";
@@ -11,6 +10,8 @@ const ctx = canvas.getContext("2d");
 //GRID CONFIGURATION
 
 const tileSize = 10;
+const tileWidth = tileSize;
+const tileHeight = tileSize;
 const tileCountX = canvas.width / tileSize;
 const tileCountY = canvas.height / tileSize;
 
@@ -42,8 +43,12 @@ function drawBoard() {
 function drawSnake() {
   ctx.fillStyle = GREEN_WICKED;
   snake.forEach((segment) => {
-  ctx.fillRect(segment.x * tileSize, segment.y * tileSize, tileSize, tileSize);
-
+    ctx.fillRect(
+      segment.x * tileWidth,
+      segment.y * tileHeight,
+      tileWidth,
+      tileHeight
+    );
   });
 }
 
