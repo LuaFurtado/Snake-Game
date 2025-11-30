@@ -26,11 +26,14 @@ let snake = [
 
 let speed = 7;
 
+// score
+let score = 0;
+
 // >>> needed: variables for head position and movement
 let headX = snake[0].x;
 let headY = snake[0].y;
 
-let xVelocity = 1; // >>> starts moving right
+let xVelocity = 1; 
 let yVelocity = 0;
 
 let ateFood = false;
@@ -58,6 +61,13 @@ function drawSnake() {
   });
 }
 
+// Draw score
+function drawScore() {
+  ctx.fillStyle = GREEN_WICKED;
+  ctx.font = "16px Arial";
+  ctx.fillText("Score: " + score, 10, 20);
+}
+
 //GAME LOOP
 
 function gameLoop() {
@@ -70,6 +80,8 @@ function gameLoop() {
     const newFood = getValidFoodPosition();
     foodX = newFood.x;
     foodY = newFood.y;
+
+    score++; // increase score when eating food
 
     console.log("Snake ate the food!");
   } else {
@@ -87,7 +99,7 @@ function gameLoop() {
   // >>> put new head at front of snake
   snake.unshift(newHead);
 
-  // >>> for now: always remove tail (snake stays size 1)
+  // >>> for now: always remove tail
   if (!ateFood) {
     snake.pop();
   }
@@ -95,12 +107,12 @@ function gameLoop() {
   drawBoard();
   drawSnake();
   drawFood();
+  drawScore(); // draw score on screen
 
   setTimeout(gameLoop, 1000 / speed);
 }
 
 function changeSnakePosition() {
-  // >>> needed: move head according to velocity
   headX = headX + xVelocity;
   headY = headY + yVelocity;
 
@@ -112,7 +124,6 @@ function changeSnakePosition() {
 }
 
 function checkSelfCollision(newHead) {
-  // if ANY segment of the snake has the same x,y of the head → collision
   return snake.some(segment => segment.x === newHead.x && segment.y === newHead.y);
 }
 
@@ -126,35 +137,30 @@ function gameOver() {
 document.body.addEventListener("keydown", keyDown);
 
 function keyDown(event) {
-  // going up → can't go down
   if (event.key === "ArrowUp") {
-    if (yVelocity === 1) return; 
+    if (yVelocity === 1) return;
     yVelocity = -1;
     xVelocity = 0;
   }
 
-  // going down → can't go up
   if (event.key === "ArrowDown") {
     if (yVelocity === -1) return;
     yVelocity = 1;
     xVelocity = 0;
   }
 
-  // going left → can't go right
   if (event.key === "ArrowLeft") {
     if (xVelocity === 1) return;
     xVelocity = -1;
     yVelocity = 0;
   }
 
-  // going right → can't go left
   if (event.key === "ArrowRight") {
     if (xVelocity === -1) return;
     xVelocity = 1;
     yVelocity = 0;
   }
 }
-
 
 //FOOD 
 let foodX = Math.floor(Math.random() * tileCountX);
@@ -172,7 +178,6 @@ function getValidFoodPosition() {
     newX = Math.floor(Math.random() * tileCountX);
     newY = Math.floor(Math.random() * tileCountY);
 
-    // check if this position overlaps the snake
     const onSnake = snake.some(segment => segment.x === newX && segment.y === newY);
 
     if (!onSnake) {
@@ -182,5 +187,4 @@ function getValidFoodPosition() {
 }
 
 //START GAME
-
 gameLoop();
