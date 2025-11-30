@@ -13,6 +13,14 @@ ctx.strokeStyle = PINK_HOT;
 ctx.lineWidth = 6;
 ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
+//grid
 const tileSize = 20;
 const tileCountX = canvas.width / tileSize;
 const tileCountY = canvas.height / tileSize;
+
+let snake = [
+  {
+    x: Math.floor(tileCountX / 2),
+    y: Math.floor(tileCountY / 2)
+  }
+];
