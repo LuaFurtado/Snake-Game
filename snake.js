@@ -76,7 +76,7 @@ function drawDateTime() {
 
   ctx.fillStyle = GREEN_WICKED;
   ctx.font = "12px Arial";
-  ctx.fillText(text, 250, 20);
+  ctx.fillText(text, 265, 20);
 }
 
 //GAME LOOP
