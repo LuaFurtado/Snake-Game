@@ -13,3 +13,6 @@ ctx.strokeStyle = PINK_HOT;
 ctx.lineWidth = 6;
 ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
+const tileSize = 20;
+const tileCountX = canvas.width / tileSize;
+const tileCountY = canvas.height / tileSize;
