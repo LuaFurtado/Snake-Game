@@ -24,3 +24,14 @@ let snake = [
     y: Math.floor(tileCountY / 2)
   }
 ];
+function drawSnake() {
+  ctx.fillStyle = GREEN_WICKED;
+  snake.forEach((segment) => {
+    ctx.fillRect(
+      segment.x * tileSize,
+      segment.y * tileSize,
+      tileSize,
+      tileSize
+    );
+  });
+}
