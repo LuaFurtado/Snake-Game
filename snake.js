@@ -140,7 +140,7 @@ function checkSelfCollision(newHead) {
 
 function gameOver() {
   alert("Game Over!");
-  document.location.reload();
+  document.getElementById("restartBtn").style.display = "block";
 }
 
 //INPUT HANDLING
@@ -216,4 +216,36 @@ startBtn.addEventListener("click", () => {
   startBtn.disabled = true;
    startBtn.style.display = "none"; 
   gameLoop();
+});
+// RESTART BUTTON
+const restartBtn = document.getElementById("restartBtn");
+
+restartBtn.addEventListener("click", () => {
+  restartBtn.style.display = "none";
+
+  // RESET ALL GAME STATE
+  snake = [
+    {
+      x: Math.floor(tileCountX / 2),
+      y: Math.floor(tileCountY / 2)
+    }
+  ];
+
+  headX = snake[0].x;
+  headY = snake[0].y;
+
+  xVelocity = 1;
+  yVelocity = 0;
+
+  score = 0;
+  speed = 7;
+
+  // generate new food
+  const newFood = getValidFoodPosition();
+  foodX = newFood.x;
+  foodY = newFood.y;
+
+  drawBoard(); // redraw empty board
+
+  gameLoop(); // start again
 });
