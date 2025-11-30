@@ -133,6 +133,34 @@ function drawFood() {
   ctx.fillRect(foodX * tileSize, foodY * tileSize, tileSize, tileSize);
 }
 
+/*1. Move the snake head:
+   - Update headX and headY based on the current velocity.
+
+2. Check if the head is on the food:
+   - If headX equals foodX AND headY equals foodY:
+       * Mark ateFood = true.
+       * Generate a new random food position.
+   - Otherwise:
+       * Mark ateFood = false.
+
+3. Add the new head to the snake:
+   - Create a new head object with (headX, headY).
+   - Insert this new head at the beginning of the snake array.
+
+4. If the snake did NOT eat:
+   - Remove the last element of the snake array (the tail).
+     This keeps the snake the same size.
+
+5. If the snake DID eat:
+   - Do NOT remove the tail.
+     This makes the snake one segment longer.
+
+6. Draw everything:
+   - Draw the board.
+   - Draw every segment of the snake.
+   - Draw the food.
+
+7. Repeat the loop. */
 
 
 //START GAME
