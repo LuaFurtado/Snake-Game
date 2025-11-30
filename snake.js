@@ -96,9 +96,6 @@ function gameLoop() {
   drawSnake();
   drawFood();
 
-  // Debug to observe updates in the console
-  console.log("Redrawing the game at speed:", speed);
-
   setTimeout(gameLoop, 1000 / speed);
 }
 
@@ -114,13 +111,11 @@ function changeSnakePosition() {
   if (headY < 0) headY = tileCountY - 1;
 }
 
-// >>> ADD THIS FUNCTION
 function checkSelfCollision(newHead) {
   // if ANY segment of the snake has the same x,y of the head → collision
   return snake.some(segment => segment.x === newHead.x && segment.y === newHead.y);
 }
 
-// >>> ADD THIS FUNCTION
 function gameOver() {
   alert("Game Over!");
   document.location.reload();
