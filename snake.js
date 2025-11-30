@@ -5,25 +5,32 @@ const GREEN_WICKED = "#1b5e20";
 const canvas = document.getElementById("snakeGame");
 const ctx = canvas.getContext("2d");
 
-//game square
+// game square
 ctx.fillStyle = PINK_LIGHT;
 ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 // Border (hot pink!)
 ctx.strokeStyle = PINK_HOT;
 ctx.lineWidth = 6;
 ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-//grid
+// grid
 const tileSize = 10;
 const tileCountX = canvas.width / tileSize;
 const tileCountY = canvas.height / tileSize;
 
+// initial snake
 let snake = [
   {
     x: Math.floor(tileCountX / 2),
     y: Math.floor(tileCountY / 2)
   }
 ];
+
+// speed variable (controls game pace)
+let speed = 7;
+
+// draw snake
 function drawSnake() {
   ctx.fillStyle = GREEN_WICKED;
   snake.forEach((segment) => {
@@ -35,6 +42,8 @@ function drawSnake() {
     );
   });
 }
+
+// game loop using setTimeout (video tutorial style)
 function gameLoop() {
   // Redraw background
   ctx.fillStyle = PINK_LIGHT;
@@ -46,6 +55,10 @@ function gameLoop() {
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
   drawSnake();
+
+  // schedule next frame based on speed
+  setTimeout(gameLoop, 1000 / speed);
 }
 
-setInterval(gameLoop, 150);
+// start the loop
+gameLoop();
