@@ -68,12 +68,17 @@ function gameLoop() {
   changeSnakePosition();
 
   // >>> Check if snake head is on the food
-  if (headX === foodX && headY === foodY) {
-    foodX = Math.floor(Math.random() * tileCountX);
-    foodY = Math.floor(Math.random() * tileCountY);
+if (headX === foodX && headY === foodY) {
+  ateFood = true;
 
-    console.log("Snake ate the food!");
-  }
+  foodX = Math.floor(Math.random() * tileCountX);
+  foodY = Math.floor(Math.random() * tileCountY);
+
+  console.log("Snake ate the food!");
+} else {
+  ateFood = false;
+}
+
 
   // >>> build new head segment
   const newHead = { x: headX, y: headY };
