@@ -89,6 +89,10 @@ function gameLoop() {
     ateFood = true;
     score++; // increase score!
 
+    if (score % 5 === 0) {
+    speed++;
+    }
+
     const newFood = getValidFoodPosition();
     foodX = newFood.x;
     foodY = newFood.y;
