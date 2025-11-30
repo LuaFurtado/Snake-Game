@@ -64,6 +64,14 @@ function drawSnake() {
 function gameLoop() {
   changeSnakePosition();
 
+  // >>> Check if snake head is on the food
+  if (headX === foodX && headY === foodY) {
+    foodX = Math.floor(Math.random() * tileCountX);
+    foodY = Math.floor(Math.random() * tileCountY);
+
+    console.log("Snake ate the food!");
+  }
+
   // >>> needed: update the snake head to follow movement
   snake[0].x = headX;
   snake[0].y = headY;
@@ -71,7 +79,6 @@ function gameLoop() {
   drawBoard();
   drawSnake();
   drawFood();
-
 
   // Debug to observe updates in the console
   console.log("Redrawing the game at speed:", speed);
@@ -83,15 +90,17 @@ function changeSnakePosition(){
   // >>> needed: move head according to velocity
   headX = headX + xVelocity;
   headY = headY + yVelocity;
+
   if (headX >= tileCountX) headX = 0;
   if (headX < 0) headX = tileCountX - 1;
 
   if (headY >= tileCountY) headY = 0;
   if (headY < 0) headY = tileCountY - 1;
-// Why no else statements?
-// Because each boundary must be checked independently:
-// the snake can cross left/right or top/bottom on any frame.
-// Using else would skip the other checks and break the wrap-around logic.
+
+  // Why no else statements?
+  // Because each boundary must be checked independently:
+  // the snake can cross left/right or top/bottom on any frame.
+  // Using else would skip the other checks and break the wrap-around logic.
 }
 
 //INPUT HANDLING
@@ -133,8 +142,7 @@ function drawFood() {
   ctx.fillRect(foodX * tileSize, foodY * tileSize, tileSize, tileSize);
 }
 
-/*1. Move the snake head:
-   - Update headX and headY based on the current velocity.
+/*
 
 2. Check if the head is on the food:
    - If headX equals foodX AND headY equals foodY:
