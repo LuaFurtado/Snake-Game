@@ -70,6 +70,8 @@ function gameLoop() {
 
   drawBoard();
   drawSnake();
+  drawFood();
+
 
   // Debug to observe updates in the console
   console.log("Redrawing the game at speed:", speed);
@@ -81,9 +83,16 @@ function changeSnakePosition(){
   // >>> needed: move head according to velocity
   headX = headX + xVelocity;
   headY = headY + yVelocity;
-}
+  if (headX >= tileCountX) headX = 0;
+  if (headX < 0) headX = tileCountX - 1;
 
-//INPUT HANDLING
+  if (headY >= tileCountY) headY = 0;
+  if (headY < 0) headY = tileCountY - 1;
+// Why no else statements?
+// Because each boundary must be checked independently:
+// the snake can cross left/right or top/bottom on any frame.
+// Using else would skip the other checks and break the wrap-around logic.
+}
 
 //INPUT HANDLING
 
@@ -113,6 +122,15 @@ function keyDown(event){
     xVelocity = 1;
     yVelocity = 0;
   }
+}
+
+//FOOD 
+let foodX = Math.floor(Math.random() * tileCountX);
+let foodY = Math.floor(Math.random() * tileCountY);
+
+function drawFood() {
+  ctx.fillStyle = PINK_HOT;  
+  ctx.fillRect(foodX * tileSize, foodY * tileSize, tileSize, tileSize);
 }
 
 
