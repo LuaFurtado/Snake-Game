@@ -90,7 +90,7 @@ function gameLoop() {
     score++; // increase score!
 
     if (score % 5 === 0) {
-    speed++;
+    speed += 3;
     }
 
     const newFood = getValidFoodPosition();
