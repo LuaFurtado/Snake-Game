@@ -33,6 +33,9 @@ let headY = snake[0].y;
 let xVelocity = 1; // >>> starts moving right
 let yVelocity = 0;
 
+let ateFood = false;
+
+
 //DRAW FUNCTIONS
 
 
