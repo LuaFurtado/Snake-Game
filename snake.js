@@ -26,6 +26,13 @@ let snake = [
 
 let speed = 7;
 
+// >>> needed: variables for head position and movement
+let headX = snake[0].x;
+let headY = snake[0].y;
+
+let xVelocity = 1; // >>> starts moving right
+let yVelocity = 0;
+
 //DRAW FUNCTIONS
 
 
@@ -55,6 +62,12 @@ function drawSnake() {
 //GAME LOOP
 
 function gameLoop() {
+  changeSnakePosition();
+
+  // >>> needed: update the snake head to follow movement
+  snake[0].x = headX;
+  snake[0].y = headY;
+
   drawBoard();
   drawSnake();
 
@@ -64,15 +77,44 @@ function gameLoop() {
   setTimeout(gameLoop, 1000 / speed);
 }
 
+function changeSnakePosition(){
+  // >>> needed: move head according to velocity
+  headX = headX + xVelocity;
+  headY = headY + yVelocity;
+}
+
+//INPUT HANDLING
 
 //INPUT HANDLING
 
 document.body.addEventListener("keydown", keyDown);
 
-// Placeholder function so your listener doesn't break
-function keyDown(event) {
-  console.log("Key pressed:", event.key);
+function keyDown(event){
+  //up
+  if(event.key === "ArrowUp"){
+    yVelocity = -1;
+    xVelocity = 0;
+  }
+
+  //down
+  if(event.key === "ArrowDown"){
+    yVelocity = 1;
+    xVelocity = 0;
+  }
+
+  //left
+  if(event.key === "ArrowLeft"){
+    xVelocity = -1;
+    yVelocity = 0;
+  }
+
+  //right
+  if(event.key === "ArrowRight"){
+    xVelocity = 1;
+    yVelocity = 0;
+  }
 }
+
 
 
 //START GAME
