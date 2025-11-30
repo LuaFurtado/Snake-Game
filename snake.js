@@ -35,3 +35,17 @@ function drawSnake() {
     );
   });
 }
+function gameLoop() {
+  // Redraw background
+  ctx.fillStyle = PINK_LIGHT;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Redraw border
+  ctx.strokeStyle = PINK_HOT;
+  ctx.lineWidth = 6;
+  ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
+  drawSnake();
+}
+
+setInterval(gameLoop, 150);
