@@ -55,7 +55,7 @@ function gameLoop() {
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
   drawSnake();
-
+console.log(drawSnake);
   // schedule next frame based on speed
   setTimeout(gameLoop, 1000 / speed);
 }
