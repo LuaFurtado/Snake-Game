@@ -72,9 +72,14 @@ function gameLoop() {
     console.log("Snake ate the food!");
   }
 
-  // >>> needed: update the snake head to follow movement
-  snake[0].x = headX;
-  snake[0].y = headY;
+  // >>> build new head segment
+  const newHead = { x: headX, y: headY };
+
+  // >>> put new head at front of snake
+  snake.unshift(newHead);
+
+  // >>> for now: always remove tail (snake stays size 1)
+  snake.pop();
 
   drawBoard();
   drawSnake();
@@ -143,13 +148,6 @@ function drawFood() {
 }
 
 /*
-
-2. Check if the head is on the food:
-   - If headX equals foodX AND headY equals foodY:
-       * Mark ateFood = true.
-       * Generate a new random food position.
-   - Otherwise:
-       * Mark ateFood = false.
 
 3. Add the new head to the snake:
    - Create a new head object with (headX, headY).
