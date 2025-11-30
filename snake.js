@@ -25,6 +25,7 @@ let snake = [
 ];
 
 let speed = 7;
+let displaySpeed = 1;
 
 // movement variables
 let headX = snake[0].x;
@@ -72,7 +73,7 @@ function drawScore() {
 function drawSpeed() {
   ctx.fillStyle = GREEN_WICKED;
   ctx.font = "14px Arial";
-  ctx.fillText("Speed: " + speed, 10, 387);
+  ctx.fillText("Speed: " + displaySpeed, 10, 387);
 }
 
 
@@ -98,6 +99,7 @@ function gameLoop() {
 
     if (score % 5 === 0) {
     speed += 3;
+    displaySpeed++;
     }
 
     const newFood = getValidFoodPosition();
