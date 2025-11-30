@@ -125,31 +125,36 @@ function gameOver() {
 
 document.body.addEventListener("keydown", keyDown);
 
-function keyDown(event){
-  //up
-  if(event.key === "ArrowUp"){
+function keyDown(event) {
+  // going up → can't go down
+  if (event.key === "ArrowUp") {
+    if (yVelocity === 1) return; 
     yVelocity = -1;
     xVelocity = 0;
   }
 
-  //down
-  if(event.key === "ArrowDown"){
+  // going down → can't go up
+  if (event.key === "ArrowDown") {
+    if (yVelocity === -1) return;
     yVelocity = 1;
     xVelocity = 0;
   }
 
-  //left
-  if(event.key === "ArrowLeft"){
+  // going left → can't go right
+  if (event.key === "ArrowLeft") {
+    if (xVelocity === 1) return;
     xVelocity = -1;
     yVelocity = 0;
   }
 
-  //right
-  if(event.key === "ArrowRight"){
+  // going right → can't go left
+  if (event.key === "ArrowRight") {
+    if (xVelocity === -1) return;
     xVelocity = 1;
     yVelocity = 0;
   }
 }
+
 
 //FOOD 
 let foodX = Math.floor(Math.random() * tileCountX);
