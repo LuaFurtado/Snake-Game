@@ -35,10 +35,6 @@ let yVelocity = 0;
 
 let ateFood = false;
 
-
-//DRAW FUNCTIONS
-
-
 // Draw board background + border
 function drawBoard() {
   ctx.fillStyle = PINK_LIGHT;
@@ -156,28 +152,21 @@ function drawFood() {
   ctx.fillStyle = PINK_HOT;  
   ctx.fillRect(foodX * tileSize, foodY * tileSize, tileSize, tileSize);
 }
+function getValidFoodPosition() {
+  let newX, newY;
 
-/*
+  while (true) {
+    newX = Math.floor(Math.random() * tileCountX);
+    newY = Math.floor(Math.random() * tileCountY);
 
-3. Add the new head to the snake:
-   - Create a new head object with (headX, headY).
-   - Insert this new head at the beginning of the snake array.
+    // check if this position overlaps the snake
+    const onSnake = snake.some(segment => segment.x === newX && segment.y === newY);
 
-4. If the snake did NOT eat:
-   - Remove the last element of the snake array (the tail).
-     This keeps the snake the same size.
-
-5. If the snake DID eat:
-   - Do NOT remove the tail.
-     This makes the snake one segment longer.
-
-6. Draw everything:
-   - Draw the board.
-   - Draw every segment of the snake.
-   - Draw the food.
-
-7. Repeat the loop. */
-
+    if (!onSnake) {
+      return { x: newX, y: newY };
+    }
+  }
+}
 
 //START GAME
 
