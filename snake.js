@@ -69,6 +69,13 @@ function drawScore() {
   ctx.fillText("Score: " + score, 10, 20);
 }
 
+function drawSpeed() {
+  ctx.fillStyle = GREEN_WICKED;
+  ctx.font = "14px Arial";
+  ctx.fillText("Speed: " + speed, 10, 387);
+}
+
+
 // Draw Date & Time
 function drawDateTime() {
   const now = new Date();
@@ -121,6 +128,8 @@ function gameLoop() {
   drawFood();
   drawScore();
   drawDateTime();
+  drawSpeed();
+
 
   setTimeout(gameLoop, 1000 / speed);
 }
