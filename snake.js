@@ -87,7 +87,9 @@ if (headX === foodX && headY === foodY) {
   snake.unshift(newHead);
 
   // >>> for now: always remove tail (snake stays size 1)
+  if (!ateFood) {
   snake.pop();
+   }
 
   drawBoard();
   drawSnake();
