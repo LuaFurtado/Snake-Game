@@ -15,9 +15,3 @@ The idea and initial structure were inspired by the book _**JavaScript for Kids*
 - Understand how to **structure a small interactive project**  
 - **Iterate and improve** the game as I continue learning
 
----
-
-## 🚧 **Status**
-
-More updates will be added as the game evolves.  
-Stay tuned for improvements, animations, and extra features!
