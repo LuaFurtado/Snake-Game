@@ -7,6 +7,9 @@ const canvas = document.getElementById("snakeGame");
 const ctx = canvas.getContext("2d");
 
 // Grid Configuration
+// The game board is divided into square tiles.
+// Each tile is tileSize pixels, and the grid dimensions (tileCountX/Y)
+// are calculated based on the canvas width and height.
 const tileSize = 10;
 const tileWidth = tileSize;
 const tileHeight = tileSize;
