@@ -155,6 +155,7 @@ function checkSelfCollision(newHead) {
 }
 
 // Game Over Handler
+// TODO: Replace this temporary alert with a proper Game Over screen.
 function gameOver() {
   alert("Game Over!");
   document.getElementById("restartBtn").style.display = "block";
