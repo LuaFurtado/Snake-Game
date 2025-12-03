@@ -268,3 +268,23 @@ restartBtn.addEventListener("click", () => {
 
   gameLoop();
 });
+
+/*TODO – Future Refactor
+1. Transform Snake into an object (state + methods).
+2. Move head position, velocity, body and movement into Snake object.
+3. Move self-collision logic into Snake object.
+4. Move unshift/pop logic into Snake object.
+5. Remove ateFood variable entirely.
+6. Create a Snake.updatePosition() method.
+7. Eliminate newHead by using Snake’s internal state.
+8. Transform Board into an object with a draw() method.
+9. Transform Food into an object (state + draw + valid position).
+10. Move foodX/foodY to the main state section or into Food object.
+11. Consider using Food.reset() and Snake.reset().
+12. Create a Game object to hold score, speed, snake, food.
+13. Add Game.reset() for full state reset.
+14. Move collision check into Snake.updatePosition().
+15. Replace multiple if statements in keyDown() with a switch.
+16. Review need for two separate buttons (start/restart).
+
+End of TODO list.*/
