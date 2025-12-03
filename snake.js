@@ -88,7 +88,7 @@ function drawDateTime() {
 
 // Game Loop
 function gameLoop() {
-  changeSnakePosition();
+  updateSnakePosition();
 
   // Check If Snake Head Is On the Food
   if (headX === foodX && headY === foodY) {
@@ -136,7 +136,7 @@ function gameLoop() {
 }
 
 // Update Snake Position
-function changeSnakePosition() {
+function updateSnakePosition() {
   headX = headX + xVelocity;
   headY = headY + yVelocity;
 
