@@ -78,6 +78,9 @@ function drawSpeed() {
 
 // Draw Date & Time
 function drawDateTime() {
+  const customDate = new Date(2020, 0, 1); 
+  customDate.setTime(Date.now());
+
   const now = new Date();
   const text = now.toLocaleString();
 
@@ -85,6 +88,7 @@ function drawDateTime() {
   ctx.font = "12px Arial";
   ctx.fillText(text, 265, 20);
 }
+
 
 // Game Loop
 function gameLoop() {
