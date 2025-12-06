@@ -38,6 +38,7 @@ let ateFood = false;
 
 // Score
 let score = 0;
+let scoreHistory = [];
 
 // Draw Board Background + Border
 function drawBoard() {
@@ -163,7 +164,21 @@ function checkSelfCollision(newHead) {
 // Game Over Handler
 // TODO: Replace this temporary alert with a proper Game Over screen.
 function gameOver() {
-  alert("Game Over!");
+  // Save this score in the history (push)
+  scoreHistory.push(score);
+
+  // Keep only the last 3 scores (shift)
+  if (scoreHistory.length > 3) {
+    scoreHistory.shift();
+  }
+
+  // Show alert with your score + last three scores
+  alert(
+    `Game Over!\n` +
+    `Your score: ${score}\n` +
+    `Last scores: ${scoreHistory.join(", ")}`
+  );
+
   document.getElementById("restartBtn").style.display = "block";
 }
 
