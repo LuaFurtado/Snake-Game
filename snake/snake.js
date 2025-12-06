@@ -133,6 +133,8 @@ function gameLoop() {
   drawScore();
   drawDateTime();
   drawSpeed();
+  drawSecretMessage();
+
 
   console.log("speed:", speed);
 
@@ -292,3 +294,41 @@ restartBtn.addEventListener("click", () => {
 16. Review need for two separate buttons (start/restart).
 
 End of TODO list.*/
+
+// ===== Easter Egg to fulfill missing Techtonica requirements =====
+const secretMessages = [
+  ["This easter egg exists solely so I can fulfill all the Techtonica requirements for this milestone. Don't judge me. 😂🐍"],
+  ["You found the secret message!"],
+  ["Coding magic, activated!"]
+];
+
+let messageHistory = [];
+
+function drawSecretMessage() {
+  if (score > 0 && score % 5 === 0) {
+
+    // Select message from nested array
+    // Using score % secretMessages.length to rotate messages instead of loop.
+    const selected = secretMessages[score % secretMessages.length][0];
+
+    // String length
+    const msgLength = selected.length;
+
+    // First character
+    // Apparently I don’t need to split the string to get a letter. JS just lets me do selected[0].
+
+    const firstChar = selected[0];
+
+    // Display selected message
+    ctx.fillStyle = PINK_HOT;
+    ctx.font = "12px Arial";
+    ctx.fillText(selected, 10, 360);
+
+    // Display optional length/index info
+    ctx.fillText(
+      `(${msgLength} chars, starts with '${firstChar}')`,
+      10,
+      380
+    );
+  }
+}
