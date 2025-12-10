@@ -106,24 +106,32 @@ class Food {
   }
 }
 
+// Board
+class Board {
+  constructor(canvas, ctx) {
+    this.canvas = canvas;
+    this.ctx = ctx;
+  }
+
+  draw() {
+    this.ctx.fillStyle = PINK_LIGHT;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.ctx.strokeStyle = PINK_HOT;
+    this.ctx.lineWidth = 6;
+    this.ctx.strokeRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+}
+
 // Game State
 let snake = new Snake(tileCountX, tileCountY);
 let food = new Food(tileCountX, tileCountY, snake);
+let board = new Board(canvas, ctx);
 
 let speed = 7;
 let displaySpeed = 1;
 
 let score = 0;
-
-// Draw Board Background + Border
-function drawBoard() {
-  ctx.fillStyle = PINK_LIGHT;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.strokeStyle = PINK_HOT;
-  ctx.lineWidth = 6;
-  ctx.strokeRect(0, 0, canvas.width, canvas.height);
-}
 
 // Draw Score
 function drawScore() {
@@ -166,7 +174,7 @@ function gameLoop() {
 
   snake.updateBody(ateFood);
 
-  drawBoard();
+  board.draw();
   snake.draw(ctx, tileWidth, tileHeight);
   food.draw(ctx);
   drawScore();
@@ -202,7 +210,7 @@ function keyDown(event) {
 
 // Start Game (Initial Board)
 document.addEventListener("DOMContentLoaded", () => {
-  drawBoard();
+  board.draw();
 });
 
 const startBtn = document.getElementById("startBtn");
@@ -221,11 +229,12 @@ restartBtn.addEventListener("click", () => {
 
   snake = new Snake(tileCountX, tileCountY);
   food = new Food(tileCountX, tileCountY, snake);
+  board = new Board(canvas, ctx);
 
   score = 0;
   speed = 7;
   displaySpeed = 1;
 
-  drawBoard();
+  board.draw();
   gameLoop();
 });
