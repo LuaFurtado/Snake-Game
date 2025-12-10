@@ -132,29 +132,6 @@ function resetFood() {
   foodY = newFood.y;
 }
 
-// ===== Secret Message (Easter Egg) =====
-const secretMessages = [
-  ["This easter egg exists solely so I can fulfill all the Techtonica requirements for this milestone. Don't judge me. 😂🐍"],
-  ["You found the secret message!"],
-  ["Coding magic, activated!"]
-];
-
-function drawSecretMessage() {
-  if (score > 0 && score % 5 === 0) {
-    const selected = secretMessages[score % secretMessages.length][0];
-
-    ctx.fillStyle = PINK_HOT;
-    ctx.font = "12px Arial";
-    ctx.fillText(selected, 10, 360);
-
-    ctx.fillText(
-      `(${selected.length} chars, starts with '${selected[0]}')`,
-      10,
-      380
-    );
-  }
-}
-
 // ===== Collision =====
 function checkSelfCollision(newHead) {
   return snake.body.some(
