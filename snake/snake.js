@@ -123,94 +123,132 @@ class Board {
   }
 }
 
-// Game State
-let snake = new Snake(tileCountX, tileCountY);
-let food = new Food(tileCountX, tileCountY, snake);
-let board = new Board(canvas, ctx);
+// Game
+class Game {
+  constructor(canvas, ctx) {
+    this.canvas = canvas;
+    this.ctx = ctx;
 
-let speed = 7;
-let displaySpeed = 1;
+    this.snake = new Snake(tileCountX, tileCountY);
+    this.food = new Food(tileCountX, tileCountY, this.snake);
+    this.board = new Board(canvas, ctx);
 
-let score = 0;
+    this.speed = 7;
+    this.displaySpeed = 1;
+    this.score = 0;
 
-// Draw Score
-function drawScore() {
-  ctx.fillStyle = GREEN_WICKED;
-  ctx.font = "14px Arial";
-  ctx.fillText("Score: " + score, 10, 20);
-}
-
-// Draw Speed
-function drawSpeed() {
-  ctx.fillStyle = GREEN_WICKED;
-  ctx.font = "14px Arial";
-  ctx.fillText("Speed: " + displaySpeed, 10, 387);
-}
-
-// Game Over Handler
-function gameOver() {
-  alert("Game Over! You lost the session.");
-  document.getElementById("restartBtn").style.display = "block";
-}
-
-// Game Loop
-function gameLoop() {
-  snake.updatePosition();
-
-  let ateFood = false;
-  if (snake.headX === food.x && snake.headY === food.y) {
-    ateFood = true;
-    score++;
-
-    if (score % 5 === 0) {
-      speed += 3;
-      displaySpeed++;
-    }
-
-    food.reset();
+    this.running = false;
   }
 
-  if (snake.hasSelfCollision()) return gameOver();
+  start() {
+    this.running = true;
+    this.loop();
+  }
 
-  snake.updateBody(ateFood);
+  loop() {
+    if (!this.running) return;
 
-  board.draw();
-  snake.draw(ctx, tileWidth, tileHeight);
-  food.draw(ctx);
-  drawScore();
-  drawSpeed();
+    this.update();
+    this.draw();
 
-  setTimeout(gameLoop, 1000 / speed);
+    setTimeout(() => this.loop(), 1000 / this.speed);
+  }
+
+  update() {
+    this.snake.updatePosition();
+
+    let ateFood = false;
+    if (this.snake.headX === this.food.x && this.snake.headY === this.food.y) {
+      ateFood = true;
+      this.score++;
+
+      if (this.score % 5 === 0) {
+        this.speed += 3;
+        this.displaySpeed++;
+      }
+
+      this.food.reset();
+    }
+
+    if (this.snake.hasSelfCollision()) {
+      this.gameOver();
+      return;
+    }
+
+    this.snake.updateBody(ateFood);
+  }
+
+  draw() {
+    this.board.draw();
+    this.snake.draw(ctx, tileWidth, tileHeight);
+    this.food.draw(ctx);
+    this.drawScore();
+    this.drawSpeed();
+  }
+
+  drawScore() {
+    ctx.fillStyle = GREEN_WICKED;
+    ctx.font = "14px Arial";
+    ctx.fillText("Score: " + this.score, 10, 20);
+  }
+
+  drawSpeed() {
+    ctx.fillStyle = GREEN_WICKED;
+    ctx.font = "14px Arial";
+    ctx.fillText("Speed: " + this.displaySpeed, 10, 387);
+  }
+
+  gameOver() {
+    alert("Game Over! You lost the session.");
+    document.getElementById("restartBtn").style.display = "block";
+    this.running = false;
+  }
+
+  restart() {
+    this.snake = new Snake(tileCountX, tileCountY);
+    this.food = new Food(tileCountX, tileCountY, this.snake);
+    this.board = new Board(canvas, ctx);
+
+    this.score = 0;
+    this.speed = 7;
+    this.displaySpeed = 1;
+
+    this.running = true;
+    this.loop();
+  }
 }
+
+// Create Game
+let game = new Game(canvas, ctx);
 
 // Input Handling
 document.body.addEventListener("keydown", keyDown);
 
 function keyDown(event) {
-  if (event.key === "ArrowUp" && snake.yVelocity !== 1) {
-    snake.yVelocity = -1;
-    snake.xVelocity = 0;
+  if (event.key === "ArrowUp" && game.snake.yVelocity !== 1) {
+    game.snake.yVelocity = -1;
+    game.snake.xVelocity = 0;
   }
 
-  if (event.key === "ArrowDown" && snake.yVelocity !== -1) {
-    snake.yVelocity = 1;
-    snake.xVelocity = 0;
+  if (event.key === "ArrowDown" && game.snake.yVelocity !== -1) {
+    game.snake.yVelocity = 1;
+    game.snake.xVelocity = 0;
   }
 
-  if (event.key === "ArrowLeft" && snake.xVelocity !== 1) {
-    snake.xVelocity = -1;
-    snake.yVelocity = 0;
+  if (event.key === "ArrowLeft" && game.snake.xVelocity !== 1) {
+    game.snake.xVelocity = -1;
+    game.snake.yVelocity = 0;
   }
 
-  if (event.key === "ArrowRight" && snake.xVelocity !== -1) {
-    snake.xVelocity = 1;
-    snake.yVelocity = 0;
+  if (event.key === "ArrowRight" && game.snake.xVelocity !== -1) {
+    game.snake.xVelocity = 1;
+    game.snake.yVelocity = 0;
   }
 }
 
-// Start Game (Initial Board)
+// Start Game
 document.addEventListener("DOMContentLoaded", () => {
-  board.draw();
+  game.board.draw();
 });
 
 const startBtn = document.getElementById("startBtn");
@@ -218,7 +256,7 @@ const startBtn = document.getElementById("startBtn");
 startBtn.addEventListener("click", () => {
   startBtn.disabled = true;
   startBtn.style.display = "none";
-  gameLoop();
+  game.start();
 });
 
 // Restart Button
@@ -226,15 +264,5 @@ const restartBtn = document.getElementById("restartBtn");
 
 restartBtn.addEventListener("click", () => {
   restartBtn.style.display = "none";
-
-  snake = new Snake(tileCountX, tileCountY);
-  food = new Food(tileCountX, tileCountY, snake);
-  board = new Board(canvas, ctx);
-
-  score = 0;
-  speed = 7;
-  displaySpeed = 1;
-
-  board.draw();
-  gameLoop();
+  game.restart();
 });
