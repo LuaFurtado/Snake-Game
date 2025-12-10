@@ -130,12 +130,7 @@ function resetFood() {
 
 // Game Over Handler
 function gameOver() {
-  scoreHistory.push(score);
-  if (scoreHistory.length > 3) scoreHistory.shift();
-
-  alert(
-    `Game Over!\nYour score: ${score}\nLast scores: ${scoreHistory.join(", ")}`
-  );
+  alert("Game Over! You lost");
 
   document.getElementById("restartBtn").style.display = "block";
 }
