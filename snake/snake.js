@@ -175,9 +175,9 @@ function gameLoop() {
   snake.draw(ctx, tileWidth, tileHeight);
   drawFood();
   drawScore();
-  drawDateTime();
+  
   drawSpeed();
-  drawSecretMessage();
+
 
   setTimeout(gameLoop, 1000 / speed);
 }
