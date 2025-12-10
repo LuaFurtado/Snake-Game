@@ -52,6 +52,15 @@ class Snake {
     });
   }
 
+  updateBody(ateFood) {
+    const newHead = { x: this.headX, y: this.headY };
+    this.body.unshift(newHead);
+
+    if (!ateFood) {
+      this.body.pop();
+    }
+  }
+
   draw(ctx, tileWidth, tileHeight) {
     ctx.fillStyle = GREEN_WICKED;
     this.body.forEach((segment) => {
@@ -130,8 +139,7 @@ function resetFood() {
 
 // Game Over Handler
 function gameOver() {
-  alert("Game Over! You lost");
-
+  alert("Game Over! You lost the session.");
   document.getElementById("restartBtn").style.display = "block";
 }
 
@@ -152,13 +160,9 @@ function gameLoop() {
     resetFood();
   }
 
-  const newHead = { x: snake.headX, y: snake.headY };
-
   if (snake.hasSelfCollision()) return gameOver();
 
-  snake.body.unshift(newHead);
-
-  if (!ateFood) snake.body.pop();
+  snake.updateBody(ateFood);
 
   drawBoard();
   snake.draw(ctx, tileWidth, tileHeight);
