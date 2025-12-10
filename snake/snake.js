@@ -93,15 +93,6 @@ function drawSpeed() {
   ctx.fillText("Speed: " + displaySpeed, 10, 387);
 }
 
-function drawDateTime() {
-  const now = new Date();
-  const text = now.toLocaleString();
-
-  ctx.fillStyle = GREEN_WICKED;
-  ctx.font = "12px Arial";
-  ctx.fillText(text, 265, 20);
-}
-
 // ===== Food =====
 let foodX;
 let foodY;
