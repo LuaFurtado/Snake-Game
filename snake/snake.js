@@ -16,13 +16,36 @@ const tileHeight = tileSize;
 const tileCountX = canvas.width / tileSize;
 const tileCountY = canvas.height / tileSize;
 
-// Game State
-let snake = [
-  {
-    x: Math.floor(tileCountX / 2),
-    y: Math.floor(tileCountY / 2)
+class Snake {
+  constructor(tileCountX, tileCountY) {
+    this.tileCountX = tileCountX;
+    this.tileCountY = tileCountY;
+
+    this.body = [
+      {
+        x: Math.floor(tileCountX / 2),
+        y: Math.floor(tileCountY / 2)
+      }
+    ];
   }
-];
+
+  draw(ctx, tileWidth, tileHeight) {
+    ctx.fillStyle = GREEN_WICKED;
+    this.body.forEach((segment) => {
+      ctx.fillRect(
+        segment.x * tileWidth,
+        segment.y * tileHeight,
+        tileWidth,
+        tileHeight
+      );
+    });
+  }
+}
+
+
+// Game State
+let snake = new Snake(tileCountX, tileCountY);
+
 
 let speed = 7;
 let displaySpeed = 1;
