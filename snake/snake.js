@@ -51,8 +51,9 @@ let speed = 7;
 let displaySpeed = 1;
 
 // Movement Variables
-let headX = snake[0].x;
-let headY = snake[0].y;
+let headX = snake.body[0].x;
+let headY = snake.body[0].y;
+
 
 let xVelocity = 1;
 let yVelocity = 0;
@@ -76,7 +77,7 @@ function drawBoard() {
 // Draw Snake Segments
 function drawSnake() {
   ctx.fillStyle = GREEN_WICKED;
-  snake.forEach((segment) => {
+  snake.body.forEach((segment) => {
     ctx.fillRect(
       segment.x * tileWidth,
       segment.y * tileHeight,
@@ -144,11 +145,11 @@ function gameLoop() {
   }
 
   // Add New Head to Front of Snake
-  snake.unshift(newHead);
+  snake.body.unshift(newHead);
 
   // Remove Tail Only If No Food
   if (!ateFood) {
-    snake.pop();
+    snake.body.pop();
   }
 
   drawBoard();
@@ -179,7 +180,7 @@ function updateSnakePosition() {
 
 // Check Self Collision
 function checkSelfCollision(newHead) {
-  return snake.some(
+  return snake.body.some(
     (segment) => segment.x === newHead.x && segment.y === newHead.y
   );
 }
@@ -256,7 +257,7 @@ function getValidFoodPosition() {
     newX = Math.floor(Math.random() * tileCountX);
     newY = Math.floor(Math.random() * tileCountY);
 
-    const onSnake = snake.some(
+    const onSnake = snake.body.some(
       (segment) => segment.x === newX && segment.y === newY
     );
 
