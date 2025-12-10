@@ -13,7 +13,7 @@ const tileHeight = tileSize;
 const tileCountX = canvas.width / tileSize;
 const tileCountY = canvas.height / tileSize;
 
-// Snake
+// === Snake (object) ===
 class Snake {
   constructor(tileCountX, tileCountY) {
     this.tileCountX = tileCountX;
@@ -39,15 +39,18 @@ class Snake {
 
     if (this.headX >= this.tileCountX) this.headX = 0;
     if (this.headX < 0) this.headX = this.tileCountX - 1;
+
     if (this.headY >= this.tileCountY) this.headY = 0;
     if (this.headY < 0) this.headY = this.tileCountY - 1;
   }
 
   hasSelfCollision() {
     return this.body.some((segment, index) => {
-      return index !== 0 &&
-             segment.x === this.headX &&
-             segment.y === this.headY;
+      return (
+        index !== 0 &&
+        segment.x === this.headX &&
+        segment.y === this.headY
+      );
     });
   }
 
@@ -73,7 +76,7 @@ class Snake {
   }
 }
 
-// Food
+// === Food (object) ===
 class Food {
   constructor(tileCountX, tileCountY, snake) {
     this.tileCountX = tileCountX;
@@ -106,7 +109,7 @@ class Food {
   }
 }
 
-// Board
+// === Board (object) ===
 class Board {
   constructor(canvas, ctx) {
     this.canvas = canvas;
@@ -123,7 +126,7 @@ class Board {
   }
 }
 
-// Game
+// === Game (object) ===
 class Game {
   constructor(canvas, ctx) {
     this.canvas = canvas;
@@ -158,6 +161,7 @@ class Game {
     this.snake.updatePosition();
 
     let ateFood = false;
+
     if (this.snake.headX === this.food.x && this.snake.headY === this.food.y) {
       ateFood = true;
       this.score++;
@@ -221,28 +225,41 @@ class Game {
 // Create Game
 let game = new Game(canvas, ctx);
 
-// Input Handling
+// === Input Handling (switch version) ===
 document.body.addEventListener("keydown", keyDown);
 
 function keyDown(event) {
-  if (event.key === "ArrowUp" && game.snake.yVelocity !== 1) {
-    game.snake.yVelocity = -1;
-    game.snake.xVelocity = 0;
-  }
+  switch (event.key) {
+    case "ArrowUp":
+      if (game.snake.yVelocity !== 1) {
+        game.snake.yVelocity = -1;
+        game.snake.xVelocity = 0;
+      }
+      break;
 
-  if (event.key === "ArrowDown" && game.snake.yVelocity !== -1) {
-    game.snake.yVelocity = 1;
-    game.snake.xVelocity = 0;
-  }
+    case "ArrowDown":
+      if (game.snake.yVelocity !== -1) {
+        game.snake.yVelocity = 1;
+        game.snake.xVelocity = 0;
+      }
+      break;
 
-  if (event.key === "ArrowLeft" && game.snake.xVelocity !== 1) {
-    game.snake.xVelocity = -1;
-    game.snake.yVelocity = 0;
-  }
+    case "ArrowLeft":
+      if (game.snake.xVelocity !== 1) {
+        game.snake.xVelocity = -1;
+        game.snake.yVelocity = 0;
+      }
+      break;
 
-  if (event.key === "ArrowRight" && game.snake.xVelocity !== -1) {
-    game.snake.xVelocity = 1;
-    game.snake.yVelocity = 0;
+    case "ArrowRight":
+      if (game.snake.xVelocity !== -1) {
+        game.snake.xVelocity = 1;
+        game.snake.yVelocity = 0;
+      }
+      break;
+
+    default:
+      break;
   }
 }
 
