@@ -39,7 +39,6 @@ class Snake {
 
     if (this.headX >= this.tileCountX) this.headX = 0;
     if (this.headX < 0) this.headX = this.tileCountX - 1;
-
     if (this.headY >= this.tileCountY) this.headY = 0;
     if (this.headY < 0) this.headY = this.tileCountY - 1;
   }
@@ -74,14 +73,47 @@ class Snake {
   }
 }
 
+// Food
+class Food {
+  constructor(tileCountX, tileCountY, snake) {
+    this.tileCountX = tileCountX;
+    this.tileCountY = tileCountY;
+    this.snake = snake;
+
+    this.reset();
+  }
+
+  reset() {
+    while (true) {
+      let newX = Math.floor(Math.random() * this.tileCountX);
+      let newY = Math.floor(Math.random() * this.tileCountY);
+
+      const onSnake = this.snake.body.some(
+        (segment) => segment.x === newX && segment.y === newY
+      );
+
+      if (!onSnake) {
+        this.x = newX;
+        this.y = newY;
+        return;
+      }
+    }
+  }
+
+  draw(ctx) {
+    ctx.fillStyle = PINK_HOT;
+    ctx.fillRect(this.x * tileSize, this.y * tileSize, tileSize, tileSize);
+  }
+}
+
 // Game State
 let snake = new Snake(tileCountX, tileCountY);
+let food = new Food(tileCountX, tileCountY, snake);
 
 let speed = 7;
 let displaySpeed = 1;
 
 let score = 0;
-let scoreHistory = [];
 
 // Draw Board Background + Border
 function drawBoard() {
@@ -107,36 +139,6 @@ function drawSpeed() {
   ctx.fillText("Speed: " + displaySpeed, 10, 387);
 }
 
-// Food
-let foodX;
-let foodY;
-
-function drawFood() {
-  ctx.fillStyle = PINK_HOT;
-  ctx.fillRect(foodX * tileSize, foodY * tileSize, tileSize, tileSize);
-}
-
-function getValidFoodPosition() {
-  while (true) {
-    let newX = Math.floor(Math.random() * tileCountX);
-    let newY = Math.floor(Math.random() * tileCountY);
-
-    const onSnake = snake.body.some(
-      (segment) => segment.x === newX && segment.y === newY
-    );
-
-    if (!onSnake) {
-      return { x: newX, y: newY };
-    }
-  }
-}
-
-function resetFood() {
-  const newFood = getValidFoodPosition();
-  foodX = newFood.x;
-  foodY = newFood.y;
-}
-
 // Game Over Handler
 function gameOver() {
   alert("Game Over! You lost the session.");
@@ -148,7 +150,7 @@ function gameLoop() {
   snake.updatePosition();
 
   let ateFood = false;
-  if (snake.headX === foodX && snake.headY === foodY) {
+  if (snake.headX === food.x && snake.headY === food.y) {
     ateFood = true;
     score++;
 
@@ -157,7 +159,7 @@ function gameLoop() {
       displaySpeed++;
     }
 
-    resetFood();
+    food.reset();
   }
 
   if (snake.hasSelfCollision()) return gameOver();
@@ -166,7 +168,7 @@ function gameLoop() {
 
   drawBoard();
   snake.draw(ctx, tileWidth, tileHeight);
-  drawFood();
+  food.draw(ctx);
   drawScore();
   drawSpeed();
 
@@ -201,10 +203,8 @@ function keyDown(event) {
 // Start Game (Initial Board)
 document.addEventListener("DOMContentLoaded", () => {
   drawBoard();
-  resetFood();
 });
 
-// Start Button Click
 const startBtn = document.getElementById("startBtn");
 
 startBtn.addEventListener("click", () => {
@@ -220,12 +220,11 @@ restartBtn.addEventListener("click", () => {
   restartBtn.style.display = "none";
 
   snake = new Snake(tileCountX, tileCountY);
+  food = new Food(tileCountX, tileCountY, snake);
 
   score = 0;
   speed = 7;
   displaySpeed = 1;
-
-  resetFood();
 
   drawBoard();
   gameLoop();
