@@ -19,12 +19,34 @@ class Snake {
     this.tileCountX = tileCountX;
     this.tileCountY = tileCountY;
 
-    this.body = [ 
+    // Snake body starts with 1 segment
+    this.body = [
       {
         x: Math.floor(tileCountX / 2),
         y: Math.floor(tileCountY / 2)
       }
     ];
+
+    // Head position
+    this.headX = this.body[0].x;
+    this.headY = this.body[0].y;
+
+    // Movement velocity
+    this.xVelocity = 1;
+    this.yVelocity = 0;
+  }
+
+  updatePosition() {
+    this.headX += this.xVelocity;
+    this.headY += this.yVelocity;
+
+    // Wrap horizontally
+    if (this.headX >= this.tileCountX) this.headX = 0;
+    if (this.headX < 0) this.headX = this.tileCountX - 1;
+
+    // Wrap vertically
+    if (this.headY >= this.tileCountY) this.headY = 0;
+    if (this.headY < 0) this.headY = this.tileCountY - 1;
   }
 
   draw(ctx, tileWidth, tileHeight) {
@@ -46,22 +68,10 @@ let snake = new Snake(tileCountX, tileCountY);
 let speed = 7;
 let displaySpeed = 1;
 
-// Movement (head position + velocity)
-let headX = snake.body[0].x;
-let headY = snake.body[0].y;
-
-let xVelocity = 1;
-let yVelocity = 0;
-
-// Score
 let score = 0;
 let scoreHistory = [];
 
-// Food
-let foodX;
-let foodY;
-
-// ===== Draw Functions =====
+// ===== Drawing =====
 function drawBoard() {
   ctx.fillStyle = PINK_LIGHT;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -92,46 +102,19 @@ function drawDateTime() {
   ctx.fillText(text, 265, 20);
 }
 
+// ===== Food =====
+let foodX;
+let foodY;
+
 function drawFood() {
   ctx.fillStyle = PINK_HOT;
   ctx.fillRect(foodX * tileSize, foodY * tileSize, tileSize, tileSize);
 }
 
-// ===== Secret Message / Easter Egg =====
-const secretMessages = [
-  ["This easter egg exists solely so I can fulfill all the Techtonica requirements for this milestone. Don't judge me. 😂🐍"],
-  ["You found the secret message!"],
-  ["Coding magic, activated!"]
-];
-
-let messageHistory = [];
-
-function drawSecretMessage() {
-  if (score > 0 && score % 5 === 0) {
-    const selected = secretMessages[score % secretMessages.length][0];
-
-    const msgLength = selected.length;
-    const firstChar = selected[0];
-
-    ctx.fillStyle = PINK_HOT;
-    ctx.font = "12px Arial";
-    ctx.fillText(selected, 10, 360);
-
-    ctx.fillText(
-      `(${msgLength} chars, starts with '${firstChar}')`,
-      10,
-      380
-    );
-  }
-}
-
-// ===== Food Helpers =====
 function getValidFoodPosition() {
-  let newX, newY;
-
   while (true) {
-    newX = Math.floor(Math.random() * tileCountX);
-    newY = Math.floor(Math.random() * tileCountY);
+    let newX = Math.floor(Math.random() * tileCountX);
+    let newY = Math.floor(Math.random() * tileCountY);
 
     const onSnake = snake.body.some(
       (segment) => segment.x === newX && segment.y === newY
@@ -149,20 +132,30 @@ function resetFood() {
   foodY = newFood.y;
 }
 
-// ===== Movement & Collision =====
-function updateSnakePosition() {
-  headX = headX + xVelocity;
-  headY = headY + yVelocity;
+// ===== Secret Message (Easter Egg) =====
+const secretMessages = [
+  ["This easter egg exists solely so I can fulfill all the Techtonica requirements for this milestone. Don't judge me. 😂🐍"],
+  ["You found the secret message!"],
+  ["Coding magic, activated!"]
+];
 
-  // Wrap horizontally
-  if (headX >= tileCountX) headX = 0;
-  if (headX < 0) headX = tileCountX - 1;
+function drawSecretMessage() {
+  if (score > 0 && score % 5 === 0) {
+    const selected = secretMessages[score % secretMessages.length][0];
 
-  // Wrap vertically
-  if (headY >= tileCountY) headY = 0;
-  if (headY < 0) headY = tileCountY - 1;
+    ctx.fillStyle = PINK_HOT;
+    ctx.font = "12px Arial";
+    ctx.fillText(selected, 10, 360);
+
+    ctx.fillText(
+      `(${selected.length} chars, starts with '${selected[0]}')`,
+      10,
+      380
+    );
+  }
 }
 
+// ===== Collision =====
 function checkSelfCollision(newHead) {
   return snake.body.some(
     (segment) => segment.x === newHead.x && segment.y === newHead.y
@@ -172,27 +165,22 @@ function checkSelfCollision(newHead) {
 // ===== Game Over =====
 function gameOver() {
   scoreHistory.push(score);
-
-  if (scoreHistory.length > 3) {
-    scoreHistory.shift();
-  }
+  if (scoreHistory.length > 3) scoreHistory.shift();
 
   alert(
-    `Game Over!\n` +
-    `Your score: ${score}\n` +
-    `Last scores: ${scoreHistory.join(", ")}`
+    `Game Over!\nYour score: ${score}\nLast scores: ${scoreHistory.join(", ")}`
   );
 
   document.getElementById("restartBtn").style.display = "block";
 }
 
-// ===== Main Game Loop =====
+// ===== Game Loop =====
 function gameLoop() {
-  updateSnakePosition();
+  snake.updatePosition();
 
-  // Check food collision
+  // Check if snake ate food
   let ateFood = false;
-  if (headX === foodX && headY === foodY) {
+  if (snake.headX === foodX && snake.headY === foodY) {
     ateFood = true;
     score++;
 
@@ -204,22 +192,17 @@ function gameLoop() {
     resetFood();
   }
 
-  const newHead = { x: headX, y: headY };
+  // Build new head segment
+  const newHead = { x: snake.headX, y: snake.headY };
 
   // Self collision
-  if (checkSelfCollision(newHead)) {
-    return gameOver();
-  }
+  if (checkSelfCollision(newHead)) return gameOver();
 
-  // Add head
   snake.body.unshift(newHead);
 
-  // Remove tail if no food
-  if (!ateFood) {
-    snake.body.pop();
-  }
+  if (!ateFood) snake.body.pop();
 
-  // Draw
+  // Draw everything
   drawBoard();
   snake.draw(ctx, tileWidth, tileHeight);
   drawFood();
@@ -235,28 +218,24 @@ function gameLoop() {
 document.body.addEventListener("keydown", keyDown);
 
 function keyDown(event) {
-  if (event.key === "ArrowUp") {
-    if (yVelocity === 1) return;
-    yVelocity = -1;
-    xVelocity = 0;
+  if (event.key === "ArrowUp" && snake.yVelocity !== 1) {
+    snake.yVelocity = -1;
+    snake.xVelocity = 0;
   }
 
-  if (event.key === "ArrowDown") {
-    if (yVelocity === -1) return;
-    yVelocity = 1;
-    xVelocity = 0;
+  if (event.key === "ArrowDown" && snake.yVelocity !== -1) {
+    snake.yVelocity = 1;
+    snake.xVelocity = 0;
   }
 
-  if (event.key === "ArrowLeft") {
-    if (xVelocity === 1) return;
-    xVelocity = -1;
-    yVelocity = 0;
+  if (event.key === "ArrowLeft" && snake.xVelocity !== 1) {
+    snake.xVelocity = -1;
+    snake.yVelocity = 0;
   }
 
-  if (event.key === "ArrowRight") {
-    if (xVelocity === -1) return;
-    xVelocity = 1;
-    yVelocity = 0;
+  if (event.key === "ArrowRight" && snake.xVelocity !== -1) {
+    snake.xVelocity = 1;
+    snake.yVelocity = 0;
   }
 }
 
@@ -266,34 +245,26 @@ document.addEventListener("DOMContentLoaded", () => {
   resetFood();
 });
 
-// Buttons
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 
+// Start
 startBtn.addEventListener("click", () => {
   startBtn.disabled = true;
   startBtn.style.display = "none";
   gameLoop();
 });
 
+// Restart
 restartBtn.addEventListener("click", () => {
   restartBtn.style.display = "none";
 
-  // Reset snake
   snake = new Snake(tileCountX, tileCountY);
-  headX = snake.body[0].x;
-  headY = snake.body[0].y;
 
-  // Reset movement
-  xVelocity = 1;
-  yVelocity = 0;
-
-  // Reset score & speed
   score = 0;
   speed = 7;
   displaySpeed = 1;
 
-  // Reset food
   resetFood();
 
   drawBoard();
