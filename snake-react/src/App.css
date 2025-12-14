@@ -3,3 +3,7 @@
   justify-content: center;
   margin-top: 1.5rem;
 }
+canvas {
+  max-width: 90vw;
+  height: auto;
+}
