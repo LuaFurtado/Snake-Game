@@ -17,13 +17,15 @@ function GameBoard() {
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
   }, []);
 
-  return (
+return (
+  <div className="game-board-container">
     <canvas
       ref={canvasRef}
       width={400}
       height={400}
     />
-  );
+  </div>
+);
 }
 
 export default GameBoard;
