@@ -1,8 +1,5 @@
-#root {
-  min-height: 100vh;
-}
-
-h1 {
-  text-align: center;
-  margin-top: 2rem;
+.game-board-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
 }

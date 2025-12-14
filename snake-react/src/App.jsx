@@ -1,3 +1,4 @@
+import "./App.css";
 import GameBoard from "./GameBoard";
 
 function App() {

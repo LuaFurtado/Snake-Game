@@ -1,3 +1,4 @@
+import "./App.css";
 import { useRef, useEffect } from "react";
 
 function GameBoard() {
