@@ -1,9 +1,24 @@
 //HUD (Heads-Up Display)
 //This component displays the score and game over message.
-function HUD() {
+import { useEffect, useState } from "react";
+
+function HUD({ gameRef }) {
+  const [level, setLevel] = useState(1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const game = gameRef?.current;
+      if (game) {
+        setLevel(game.level);
+      }
+    }, 100); // 10x / second
+
+    return () => clearInterval(interval);
+  }, [gameRef]);
+
   return (
     <div className="hud">
-      <p>Level:</p>
+      <p>Level: {level}</p>
     </div>
   );
 }
