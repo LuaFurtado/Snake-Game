@@ -1,13 +1,10 @@
-import "./App.css";
-import GameBoard from "./GameBoard";
+import GameBoard from "./components/GameBoard";
 
-function App() {
+export default function App() {
   return (
-    <>
-      <h1>Snake React 🐍</h1>
+    <div className="app">
+      <h1 className="title">Snake React</h1>
       <GameBoard />
-    </>
+    </div>
   );
 }
-
-export default App;

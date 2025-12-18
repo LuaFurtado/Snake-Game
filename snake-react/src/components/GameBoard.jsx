@@ -1,32 +1,29 @@
-import "./App.css";
 import { useRef, useEffect } from "react";
-import Game from "../game/Game";
+import "../App.css";
+
+const PINK_LIGHT = "#fce4ec";
+const PINK_HOT = "#ff0099";
 
 function GameBoard() {
   const canvasRef = useRef(null);
-  const gameRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
+    if (!canvas) return;
 
-    // background
-    ctx.fillStyle = "#fce4ec";
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Background
+    ctx.fillStyle = PINK_LIGHT;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // border
-    ctx.strokeStyle = "#ff0099";
+    // Border
+    ctx.strokeStyle = PINK_HOT;
     ctx.lineWidth = 6;
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
-
-    // connect with no logic just yet
-    gameRef.current = new Game({
-      canvas,
-      ctx,
-      onScoreChange: () => {},
-      onSpeedChange: () => {},
-      onGameOver: () => {},
-    });
   }, []);
 
   return (
