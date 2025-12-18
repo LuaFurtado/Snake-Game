@@ -1,5 +1,5 @@
-//HUD (Heads-Up Display)
-//This component displays the score and game over message.
+// HUD (Heads-Up Display)
+// This component displays the level and game over message.
 import { useEffect, useState } from "react";
 
 function HUD({ gameRef }) {
@@ -19,7 +19,7 @@ function HUD({ gameRef }) {
       }
     }, 100); // checks the game state 10 times per second
 
-    // turn off the interval when the HUD is no longer on the screen
+    // Cleanup: stop the interval when the HUD is removed from the screen
     return () => clearInterval(interval);
   }, [gameRef]);
 
@@ -29,6 +29,10 @@ function HUD({ gameRef }) {
         <>
           <p>Game Over</p>
           <p>You reached Level {level}</p>
+
+          <button onClick={() => gameRef.current.restart()}>
+            Play Again
+          </button>
         </>
       ) : (
         <p>Level: {level}</p>
