@@ -167,6 +167,9 @@ class Game {
     ) {
       ateFood = true;
       this.foodEaten += 1;
+      if (this.foodEaten % 3 === 0) {
+        this.level += 1;
+     }
       this.food.reset();
     }
 
