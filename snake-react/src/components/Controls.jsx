@@ -4,17 +4,12 @@ import arrowLeft from "../assets/arrow-left.png";
 import arrowRight from "../assets/arrow-right.png";
 
 function Controls({ gameRef }) {
-  const game = gameRef.current;
-
-  // Guard: React may render before the game is ready
-  if (!game) return null;
-
-  const snake = game.snake;
-
-  // Antônio Handler 🕹️
-  // Ensures only one direction change per game tick,
-  // preventing input flooding from rapid button presses
   const tryChangeDirection = (newX, newY, blockX, blockY) => {
+    const game = gameRef.current;
+    if (!game) return;
+
+    const snake = game.snake;
+
     if (!game.canChangeDirection) return;
     if (snake.xVelocity === blockX && snake.yVelocity === blockY) return;
 
@@ -59,5 +54,6 @@ function Controls({ gameRef }) {
     </div>
   );
 }
+
 
 export default Controls;
