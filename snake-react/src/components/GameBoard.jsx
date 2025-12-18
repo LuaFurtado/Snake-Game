@@ -139,6 +139,7 @@ class Game {
     this.speed = 7;
 
     this.running = false;
+    this.gameOver = false;
 
     // Antônio Handler
     this.canChangeDirection = true;
@@ -181,6 +182,7 @@ class Game {
 
     if (this.snake.hasSelfCollision()) {
       this.running = false;
+      this.gameOver = true;
       return;
     }
 
