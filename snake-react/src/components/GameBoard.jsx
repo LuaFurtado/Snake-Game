@@ -238,7 +238,7 @@ function GameBoard() {
   return (
   <div className="game-board-container">
     <canvas ref={canvasRef} width={canvasSize} height={canvasSize} />
-    <Controls game={gameRef.current} />
+    <Controls gameRef={gameRef} />
   </div>
 );
 
