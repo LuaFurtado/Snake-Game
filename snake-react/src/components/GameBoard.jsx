@@ -2,11 +2,12 @@ import { useRef, useEffect } from "react";
 import "../App.css";
 import Controls from "./Controls";
 
-
+/* ===== Colors ===== */
 const PINK_LIGHT = "#fce4ec";
 const PINK_HOT = "#ff0099";
 const GREEN_WICKED = "#1b5e20";
 
+/* ===== Canvas config ===== */
 const tileSize = 10;
 const canvasSize = 400;
 
@@ -134,6 +135,9 @@ class Game {
     this.score = 0;
     this.speed = 7;
     this.running = false;
+
+    // Antônio Handler
+    this.canChangeDirection = true;
   }
 
   start() {
@@ -170,6 +174,9 @@ class Game {
     }
 
     this.snake.updateBody(ateFood);
+
+    // Re-enable direction change for the next frame
+    this.canChangeDirection = true;
   }
 
   draw() {
@@ -195,6 +202,10 @@ function GameBoard() {
     game.start();
 
     const handleKeyDown = (event) => {
+      const game = gameRef.current;
+      if (!game) return;
+      if (!game.canChangeDirection) return;
+
       const snake = game.snake;
 
       switch (event.key) {
@@ -202,26 +213,34 @@ function GameBoard() {
           if (snake.yVelocity !== 1) {
             snake.yVelocity = -1;
             snake.xVelocity = 0;
+            game.canChangeDirection = false;
           }
           break;
+
         case "ArrowDown":
           if (snake.yVelocity !== -1) {
             snake.yVelocity = 1;
             snake.xVelocity = 0;
+            game.canChangeDirection = false;
           }
           break;
+
         case "ArrowLeft":
           if (snake.xVelocity !== 1) {
             snake.xVelocity = -1;
             snake.yVelocity = 0;
+            game.canChangeDirection = false;
           }
           break;
+
         case "ArrowRight":
           if (snake.xVelocity !== -1) {
             snake.xVelocity = 1;
             snake.yVelocity = 0;
+            game.canChangeDirection = false;
           }
           break;
+
         default:
           break;
       }
@@ -236,12 +255,16 @@ function GameBoard() {
   }, []);
 
   return (
-  <div className="game-board-container">
-    <canvas ref={canvasRef} width={canvasSize} height={canvasSize} />
-    <Controls gameRef={gameRef} />
-  </div>
-);
-
+    <div className="game-board-container">
+      <canvas
+        ref={canvasRef}
+        width={canvasSize}
+        height={canvasSize}
+      />
+      {/* Controls must NEVER be conditionally rendered */}
+      <Controls gameRef={gameRef} />
+    </div>
+  );
 }
 
 export default GameBoard;

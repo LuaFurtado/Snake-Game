@@ -1,8 +1,10 @@
 .game-board-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
+   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
+
 
 canvas {
   max-width: 90vw;
@@ -14,4 +16,48 @@ canvas {
   text-align: center;
   font-size: 2rem;
   color: #ff0099;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 48px 48px 48px;
+  grid-template-rows: 48px 48px 48px;
+  gap: 8px;
+}
+
+.control-up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.control-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.control-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.control-down {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.controls img {
+  width: 48px;
+  height: auto;
+}
+
+.controls {
+  z-index: 10;
+  position: relative;
 }
