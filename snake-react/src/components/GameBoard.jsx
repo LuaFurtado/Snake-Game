@@ -1,6 +1,8 @@
 import { useRef, useEffect } from "react";
 import "../App.css";
 import Controls from "./Controls";
+import HUD from "./HUD";
+
 
 /* ===== Colors ===== */
 const PINK_LIGHT = "#fce4ec";
@@ -265,6 +267,7 @@ function GameBoard() {
 
   return (
     <div className="game-board-container">
+      <HUD />
       <canvas
         ref={canvasRef}
         width={canvasSize}
