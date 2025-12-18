@@ -132,8 +132,10 @@ class Game {
     this.food = new Food(tileCountX, tileCountY, this.snake);
     this.board = new Board(canvas, ctx);
 
-    this.score = 0;
+    this.level = 1;
+    this.foodEaten = 0;
     this.speed = 7;
+    
     this.running = false;
 
     // Antônio Handler
