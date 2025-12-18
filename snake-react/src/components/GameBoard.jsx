@@ -135,7 +135,7 @@ class Game {
     this.level = 1;
     this.foodEaten = 0;
     this.speed = 7;
-    
+
     this.running = false;
 
     // Antônio Handler
@@ -166,7 +166,7 @@ class Game {
       this.snake.headY === this.food.y
     ) {
       ateFood = true;
-      this.score++;
+      this.foodEaten += 1;
       this.food.reset();
     }
 
