@@ -1,5 +1,7 @@
 import { useRef, useEffect } from "react";
 import "../App.css";
+import Controls from "./Controls";
+
 
 const PINK_LIGHT = "#fce4ec";
 const PINK_HOT = "#ff0099";
@@ -8,7 +10,7 @@ const GREEN_WICKED = "#1b5e20";
 const tileSize = 10;
 const canvasSize = 400;
 
-// ===== Snake =====
+/* ===== Snake ===== */
 class Snake {
   constructor(tileCountX, tileCountY) {
     this.tileCountX = tileCountX;
@@ -62,7 +64,44 @@ class Snake {
   }
 }
 
-// ===== Board =====
+/* ===== Food ===== */
+class Food {
+  constructor(tileCountX, tileCountY, snake) {
+    this.tileCountX = tileCountX;
+    this.tileCountY = tileCountY;
+    this.snake = snake;
+    this.reset();
+  }
+
+  reset() {
+    while (true) {
+      const newX = Math.floor(Math.random() * this.tileCountX);
+      const newY = Math.floor(Math.random() * this.tileCountY);
+
+      const onSnake = this.snake.body.some(
+        (segment) => segment.x === newX && segment.y === newY
+      );
+
+      if (!onSnake) {
+        this.x = newX;
+        this.y = newY;
+        return;
+      }
+    }
+  }
+
+  draw(ctx) {
+    ctx.fillStyle = PINK_HOT;
+    ctx.fillRect(
+      this.x * tileSize,
+      this.y * tileSize,
+      tileSize,
+      tileSize
+    );
+  }
+}
+
+/* ===== Board ===== */
 class Board {
   constructor(canvas, ctx) {
     this.canvas = canvas;
@@ -79,7 +118,7 @@ class Board {
   }
 }
 
-// ===== Game =====
+/* ===== Game ===== */
 class Game {
   constructor(canvas, ctx) {
     const tileCountX = canvas.width / tileSize;
@@ -89,8 +128,10 @@ class Game {
     this.ctx = ctx;
 
     this.snake = new Snake(tileCountX, tileCountY);
+    this.food = new Food(tileCountX, tileCountY, this.snake);
     this.board = new Board(canvas, ctx);
 
+    this.score = 0;
     this.speed = 7;
     this.running = false;
   }
@@ -112,20 +153,33 @@ class Game {
   update() {
     this.snake.updatePosition();
 
+    let ateFood = false;
+
+    if (
+      this.snake.headX === this.food.x &&
+      this.snake.headY === this.food.y
+    ) {
+      ateFood = true;
+      this.score++;
+      this.food.reset();
+    }
+
     if (this.snake.hasSelfCollision()) {
       this.running = false;
       return;
     }
 
-    this.snake.updateBody(false);
+    this.snake.updateBody(ateFood);
   }
 
   draw() {
     this.board.draw();
+    this.food.draw(this.ctx);
     this.snake.draw(this.ctx);
   }
 }
 
+/* ===== React Wrapper ===== */
 function GameBoard() {
   const canvasRef = useRef(null);
   const gameRef = useRef(null);
@@ -182,10 +236,12 @@ function GameBoard() {
   }, []);
 
   return (
-    <div className="game-board-container">
-      <canvas ref={canvasRef} width={canvasSize} height={canvasSize} />
-    </div>
-  );
+  <div className="game-board-container">
+    <canvas ref={canvasRef} width={canvasSize} height={canvasSize} />
+    <Controls game={gameRef.current} />
+  </div>
+);
+
 }
 
 export default GameBoard;
