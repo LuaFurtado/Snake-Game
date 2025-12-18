@@ -192,6 +192,23 @@ class Game {
     this.canChangeDirection = true;
   }
 
+  restart() {
+  const tileCountX = this.canvas.width / tileSize;
+  const tileCountY = this.canvas.height / tileSize;
+
+  this.snake = new Snake(tileCountX, tileCountY);
+  this.food = new Food(tileCountX, tileCountY, this.snake);
+
+  this.level = 1;
+  this.foodEaten = 0;
+  this.speed = 7;
+  this.gameOver = false;
+  this.running = true;
+
+  this.loop();
+}
+
+
   draw() {
     this.board.draw();
     this.food.draw(this.ctx);
