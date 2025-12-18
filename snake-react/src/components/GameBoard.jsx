@@ -267,7 +267,7 @@ function GameBoard() {
 
   return (
     <div className="game-board-container">
-      <HUD />
+      <HUD gameRef={gameRef} />
       <canvas
         ref={canvasRef}
         width={canvasSize}
