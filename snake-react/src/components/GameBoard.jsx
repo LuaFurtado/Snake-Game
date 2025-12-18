@@ -169,7 +169,7 @@ class Game {
       this.foodEaten += 1;
       if (this.foodEaten % 3 === 0) {
         this.level += 1;
-        this.speed += 1;
+        this.speed += 3;
         console.log(
   `LEVEL UP → level: ${this.level}, speed: ${this.speed}`
 );
