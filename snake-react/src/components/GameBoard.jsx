@@ -2,6 +2,8 @@ import { useRef, useEffect } from "react";
 import "../App.css";
 import Controls from "./Controls";
 import HUD from "./HUD";
+import { CLASSIC_CONFIG, KIDS_CONFIG } from "../gameConfigs";
+
 
 
 /* ===== Colors ===== */
@@ -123,12 +125,14 @@ class Board {
 
 /* ===== Game ===== */
 class Game {
-  constructor(canvas, ctx) {
+  constructor(canvas, ctx, mode = "classic") {
     const tileCountX = canvas.width / tileSize;
     const tileCountY = canvas.height / tileSize;
 
     this.canvas = canvas;
     this.ctx = ctx;
+
+    this.config = mode === "kids" ? KIDS_CONFIG : CLASSIC_CONFIG;
 
     this.snake = new Snake(tileCountX, tileCountY);
     this.food = new Food(tileCountX, tileCountY, this.snake);
@@ -136,12 +140,10 @@ class Game {
 
     this.level = 1;
     this.foodEaten = 0;
-    this.speed = 7;
+    this.speed = this.config.initialSpeed;
 
     this.running = false;
     this.gameOver = false;
-
-    // Antônio Handler
     this.canChangeDirection = true;
   }
 
@@ -170,13 +172,15 @@ class Game {
     ) {
       ateFood = true;
       this.foodEaten += 1;
+
       if (this.foodEaten % 3 === 0) {
         this.level += 1;
-        this.speed += 3;
-         console.log(
+        this.speed += this.config.speedIncrease;
+        console.log(
           `LEVEL UP → level: ${this.level}, speed: ${this.speed}`
         );
-     }
+      }
+
       this.food.reset();
     }
 
@@ -187,27 +191,24 @@ class Game {
     }
 
     this.snake.updateBody(ateFood);
-
-    // Re-enable direction change for the next frame
     this.canChangeDirection = true;
   }
 
   restart() {
-  const tileCountX = this.canvas.width / tileSize;
-  const tileCountY = this.canvas.height / tileSize;
+    const tileCountX = this.canvas.width / tileSize;
+    const tileCountY = this.canvas.height / tileSize;
 
-  this.snake = new Snake(tileCountX, tileCountY);
-  this.food = new Food(tileCountX, tileCountY, this.snake);
+    this.snake = new Snake(tileCountX, tileCountY);
+    this.food = new Food(tileCountX, tileCountY, this.snake);
 
-  this.level = 1;
-  this.foodEaten = 0;
-  this.speed = 7;
-  this.gameOver = false;
-  this.running = true;
+    this.level = 1;
+    this.foodEaten = 0;
+    this.speed = this.config.initialSpeed;
+    this.gameOver = false;
+    this.running = true;
 
-  this.loop();
-}
-
+    this.loop();
+  }
 
   draw() {
     this.board.draw();
