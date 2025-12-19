@@ -76,10 +76,11 @@ class Snake {
 
 /* ===== Food ===== */
 class Food {
-  constructor(tileCountX, tileCountY, snake) {
+  constructor(tileCountX, tileCountY, snake, tileSize) {
     this.tileCountX = tileCountX;
     this.tileCountY = tileCountY;
     this.snake = snake;
+    this.tileSize = tileSize;
     this.reset();
   }
 
@@ -103,13 +104,14 @@ class Food {
   draw(ctx) {
     ctx.fillStyle = PINK_HOT;
     ctx.fillRect(
-      this.x * tileSize,
-      this.y * tileSize,
-      tileSize,
-      tileSize
+      this.x * this.tileSize,
+      this.y * this.tileSize,
+      this.tileSize,
+      this.tileSize
     );
   }
 }
+
 
 /* ===== Board ===== */
 class Board {
