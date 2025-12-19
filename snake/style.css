@@ -1,71 +1,33 @@
-/* 🎭 WICKED TEAM COLOR PALETTE */
 :root {
-  --pink-light: #fce4ec;    
+  --pink-light: #fce4ec;
   --green-wicked: #1b5e20;
   --black: #000000;
   --white: #ffffff;
 }
 
-/* 🌸 GENERAL STYLING — */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: var(--pink-light);
-  color: var(--green-wicked);
-  text-align: center;
-
-  /* keeps everything centered*/
+.app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  padding-top: 2rem;
+  background-color: var(--pink-light);
 }
 
-/* ✨ TITLE  */
-h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
+.title {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
   color: var(--green-wicked);
-  text-shadow: 2px 2px var(--black);
 }
 
-/* 📜 SUBTITLE  */
-.subtitle {
-  font-size: 1.3rem;
-  margin-bottom: 40px;
-  max-width: 500px;
-  line-height: 1.5;
-  color: var(--black);
+.game-board-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
-/* 🎮 BUTTON */
-.button {
-  display: inline-block;
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  font-weight: bold;
-
-  background: var(--green-wicked);
-  color: var(--white);
-
-  border-radius: 8px;
-  text-decoration: none;
-  transition: 0.2s;
-  border: 3px solid var(--black);
+canvas {
+  max-width: 90vw;
+  background-color: var(--pink-light);
 }
 
-/* BUTTON HOVER */
-.button:hover {
-  background: var(--black);
-  color: var(--white);
-  transform: scale(1.05);
-}
-
-/*  FOOTER  */
-footer {
-  margin-top: 50px;
-  font-size: 0.9rem;
-  color: var(--green-wicked);
-  opacity: 0.85; }

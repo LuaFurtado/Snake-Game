@@ -1,0 +1,188 @@
+/* Game Board Layout */
+.game-board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+/* Canvas */
+canvas {
+  max-width: 90vw;
+  background-color: #fce4ec;
+}
+
+/* Title */
+.title {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 2rem;
+  color: #ff0099;
+}
+
+/* Controls (Arrow Buttons) */
+.controls {
+  display: grid;
+  grid-template-columns: 48px 48px 48px;
+  grid-template-rows: 48px 48px 48px;
+  gap: 8px;
+}
+
+.control-up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.control-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.control-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.control-down {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.controls img {
+  width: 48px;
+  height: auto;
+}
+
+/* Touch feedback for mobile:
+   Hover is mainly for desktop/mouse. On mobile, :active is what we can use to
+   show feedback while the user is pressing the button. */
+.controls button:active img {
+  transform: scale(0.92);
+}
+
+
+/* HUD (Score / Level / Game Over) */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+
+  font-weight: 600;
+}
+
+.hud-level {
+  font-size: 1rem;
+  color: #1b5e20;
+}
+
+.hud-game-over {
+  font-size: 1rem;
+  color: #ff0099;
+  animation: pulse 1.2s infinite;
+}
+
+
+/* Classic Mode Theme*/
+.game-board-container.classic canvas {
+  background-color: #fce4ec;
+}
+
+.game-board-container.classic .title {
+  color: #ff0099;
+}
+
+.game-board-container.classic .hud {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.game-board-container.classic .controls {
+  background: transparent;
+}
+
+
+/* Kids Mode Theme */
+.game-board-container.kids {
+  position: relative;
+}
+
+.game-board-container.kids canvas {
+  position: relative;
+  z-index: 1;
+  border-radius: 8px;
+}
+
+/* Rainbow glow */
+.game-board-container.kids::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    90deg,
+    #ff1744,
+    #ff9100,
+    #ffea00,
+    #00e676,
+    #2979ff,
+    #d500f9,
+    #ff1744
+  );
+
+  filter: blur(16px);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.mode-buttons {
+  background-color: #fce4ec;
+  padding: 0.5rem;
+  border-radius: 12px;
+
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  gap: 0.5rem;
+}
+
+.game-board-container.kids .controls {
+  background-color: #fce4ec;
+  padding: 0.75rem;
+  border-radius: 14px;
+
+  position: relative;
+  z-index: 2;
+}
+
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
