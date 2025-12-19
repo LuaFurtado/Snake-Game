@@ -2,28 +2,27 @@
 // This component displays the level and game over message.
 import { useEffect, useState } from "react";
 
-function HUD({ gameRef }) {
+function HUD({ gameRef, onRestart }) {
   const [level, setLevel] = useState(1);
   const [isGameOver, setIsGameOver] = useState(false);
   const [gameOverMessage, setGameOverMessage] = useState("Game Over");
 
   useEffect(() => {
-  // reset HUD when a new game instance is created
-  setIsGameOver(false);
-  setLevel(1);
+    setIsGameOver(false);
+    setLevel(1);
 
-  const interval = setInterval(() => {
-    const game = gameRef?.current;
+    const interval = setInterval(() => {
+      const game = gameRef?.current;
 
-    if (game) {
-      setLevel(game.level);
-      setIsGameOver(game.gameOver);
-      setGameOverMessage(game.config.gameOverMessage);
-    }
-  }, 100);
+      if (game) {
+        setLevel(game.level);
+        setIsGameOver(game.gameOver);
+        setGameOverMessage(game.config.gameOverMessage);
+      }
+    }, 100);
 
-  return () => clearInterval(interval);
-}, [gameRef]);
+    return () => clearInterval(interval);
+  }, [gameRef]);
 
   return (
     <div className="hud">
@@ -34,7 +33,7 @@ function HUD({ gameRef }) {
 
           <button
             className="hud-restart-button"
-            onClick={() => gameRef.current.restart()}
+            onClick={onRestart}
           >
             Play Again
           </button>

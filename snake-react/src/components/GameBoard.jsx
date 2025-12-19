@@ -129,10 +129,10 @@ class Board {
   }
 }
 
+
 // Game
 class Game {
   constructor(canvas, ctx, mode) {
-    
     this.canvas = canvas;
     this.ctx = ctx;
 
@@ -184,9 +184,6 @@ class Game {
       if (this.foodEaten % 3 === 0) {
         this.level += 1;
         this.speed += this.config.speedIncrease;
-        console.log(
-          `LEVEL UP → level: ${this.level}, speed: ${this.speed}`
-        );
       }
 
       this.food.reset();
@@ -195,27 +192,12 @@ class Game {
     if (this.snake.hasSelfCollision()) {
       this.running = false;
       this.gameOver = true;
+      this.canChangeDirection = true;
       return;
     }
 
     this.snake.updateBody(ateFood);
     this.canChangeDirection = true;
-  }
-
-  restart() {
-    const tileCountX = this.canvas.width / tileSize;
-    const tileCountY = this.canvas.height / tileSize;
-
-    this.snake = new Snake(tileCountX, tileCountY);
-    this.food = new Food(tileCountX, tileCountY, this.snake);
-
-    this.level = 1;
-    this.foodEaten = 0;
-    this.speed = this.config.initialSpeed;
-    this.gameOver = false;
-    this.running = true;
-
-    this.loop();
   }
 
   draw() {
@@ -225,12 +207,18 @@ class Game {
   }
 }
 
+
 // React Wrapper
 function GameBoard() {
   const [mode, setMode] = useState("classic");
+  const [restartCount, setRestartCount] = useState(0);
 
   const canvasRef = useRef(null);
   const gameRef = useRef(null);
+
+  function restartGame() {
+    setRestartCount((prev) => prev + 1);
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -292,41 +280,42 @@ function GameBoard() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       game.running = false;
-      gameRef.current = null;
     };
-  }, [mode]);
+  }, [mode, restartCount]);
 
   return (
-  <div className={`game-board-container ${mode}`}>
-    <HUD key={mode} gameRef={gameRef} />
+    <div className={`game-board-container ${mode}`}>
+      <HUD
+        key={`${mode}-${restartCount}`}
+        gameRef={gameRef}
+        onRestart={restartGame}
+      />
 
-    <div className="mode-buttons">
-      <button
-        onClick={() => setMode("classic")}
-        disabled={mode === "classic"}
-      >
-        Classic
-      </button>
+      <div className="mode-buttons">
+        <button
+          onClick={() => setMode("classic")}
+          disabled={mode === "classic"}
+        >
+          Classic
+        </button>
 
-      <button
-        onClick={() => setMode("kids")}
-        disabled={mode === "kids"}
-      >
-        Kids 🧸
-      </button>
+        <button
+          onClick={() => setMode("kids")}
+          disabled={mode === "kids"}
+        >
+          Kids 🧸
+        </button>
+      </div>
+
+      <canvas
+        ref={canvasRef}
+        width={canvasSize}
+        height={canvasSize}
+      />
+
+      <Controls gameRef={gameRef} />
     </div>
-
-    <canvas
-      ref={canvasRef}
-      width={canvasSize}
-      height={canvasSize}
-    />
-
-    <Controls gameRef={gameRef} />
-  </div>
-);
-
-
+  );
 }
 
 export default GameBoard;
