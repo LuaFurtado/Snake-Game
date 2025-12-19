@@ -293,6 +293,7 @@ function GameBoard() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       game.running = false;
+      gameRef.current = null;
     };
   }, [mode]);
 
