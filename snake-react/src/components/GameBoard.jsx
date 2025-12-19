@@ -306,7 +306,6 @@ function GameBoard() {
     {gameRef.current?.gameOver && (
       <GameOver
         message={gameRef.current.config.gameOverMessage}
-        onRestart={() => gameRef.current.restart()}
       />
     )}
 
