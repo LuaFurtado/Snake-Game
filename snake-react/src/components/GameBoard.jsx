@@ -20,9 +20,10 @@ const canvasSize = 400;
 
 /* ===== Snake ===== */
 class Snake {
-  constructor(tileCountX, tileCountY) {
+  constructor(tileCountX, tileCountY, tileSize) {
     this.tileCountX = tileCountX;
     this.tileCountY = tileCountY;
+    this.tileSize = tileSize;
 
     this.body = [
       { x: Math.floor(tileCountX / 2), y: Math.floor(tileCountY / 2) },
@@ -63,14 +64,15 @@ class Snake {
     ctx.fillStyle = GREEN_WICKED;
     this.body.forEach((segment) => {
       ctx.fillRect(
-        segment.x * tileSize,
-        segment.y * tileSize,
-        tileSize,
-        tileSize
+        segment.x * this.tileSize,
+        segment.y * this.tileSize,
+        this.tileSize,
+        this.tileSize
       );
     });
   }
 }
+
 
 /* ===== Food ===== */
 class Food {
