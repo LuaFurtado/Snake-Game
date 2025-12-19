@@ -7,9 +7,6 @@ import "../App.css";
 import Controls from "./Controls";
 import HUD from "./HUD";
 import { CLASSIC_CONFIG, KIDS_CONFIG } from "../gameConfigs";
-import GameOver from "./GameOver";
-
-
 
 
 /* ===== Colors ===== */
