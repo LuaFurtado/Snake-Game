@@ -291,17 +291,35 @@ function GameBoard() {
   }, [mode]);
 
   return (
-    <div className="game-board-container">
-      <HUD gameRef={gameRef} />
-      <canvas
-        ref={canvasRef}
-        width={canvasSize}
-        height={canvasSize}
-      />
-      {/* Controls must NEVER be conditionally rendered */}
-      <Controls gameRef={gameRef} />
+  <div className="game-board-container">
+    <HUD gameRef={gameRef} />
+
+    <div className="mode-buttons">
+      <button
+        onClick={() => setMode("classic")}
+        disabled={mode === "classic"}
+      >
+        Classic
+      </button>
+
+      <button
+        onClick={() => setMode("kids")}
+        disabled={mode === "kids"}
+      >
+        Kids 🧸
+      </button>
     </div>
-  );
+
+    <canvas
+      ref={canvasRef}
+      width={canvasSize}
+      height={canvasSize}
+    />
+
+    <Controls gameRef={gameRef} />
+  </div>
+);
+
 }
 
 export default GameBoard;
