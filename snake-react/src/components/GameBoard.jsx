@@ -298,13 +298,7 @@ function GameBoard() {
 
   return (
   <div className="game-board-container">
-    <HUD gameRef={gameRef} />
-
-    {gameRef.current?.gameOver && (
-      <GameOver
-        message={gameRef.current.config.gameOverMessage}
-      />
-    )}
+    <HUD key={mode} gameRef={gameRef} />
 
     <div className="mode-buttons">
       <button
