@@ -18,6 +18,10 @@ const GREEN_WICKED = "#1b5e20";
 const canvasSize = 400;
 
 // Snake 
+// This class represents the snake itself.
+// It handles the snake's position, movement, growth, self-collision detection,
+// and drawing the snake on the canvas.
+// This is plain JavaScript logic and does not use React or hooks.
 class Snake {
   constructor(tileCountX, tileCountY, tileSize) {
     this.tileCountX = tileCountX;
@@ -74,6 +78,11 @@ class Snake {
 
 
 // Food
+// This class represents the food object in the game.
+// It is responsible for generating food in a random position,
+// making sure it does not spawn on the snake,
+// and drawing the food on the canvas.
+// This is plain JavaScript logic and does not use React or hooks.
 class Food {
   constructor(tileCountX, tileCountY, snake, tileSize) {
     this.tileCountX = tileCountX;
@@ -113,6 +122,11 @@ class Food {
 
 
 // Board
+// This class represents the game board (background).
+// It clears and redraws the canvas on each frame,
+// including the background color and the border.
+// This class only handles visual setup and does not manage game rules or state.
+// It does not use React or hooks.
 class Board {
   constructor(canvas, ctx) {
     this.canvas = canvas;
@@ -131,6 +145,12 @@ class Board {
 
 
 // Game
+// This class works as the game engine.
+// It creates and connects the Snake, Food, and Board,
+// controls the game loop, speed, levels, and game over logic.
+// This class centralizes the game rules and state,
+// using plain JavaScript without React or hooks.
+
 class Game {
   constructor(canvas, ctx, mode) {
     this.canvas = canvas;
@@ -209,17 +229,29 @@ class Game {
 
 
 // React Wrapper
+// GameBoard is a React component that connects the game engine to the UI.
+// It creates and resets the Game instance, manages game mode and restart logic,
+// handles keyboard input, and passes game state to the HUD.
+// This is the only place where React hooks are used (useState, useRef, useEffect)
 function GameBoard() {
+  // useState is used to store values that change and update the screen
+  // - mode controls which version of the game is active
+  // - restartCount is used to restart the game
   const [mode, setMode] = useState("classic");
   const [restartCount, setRestartCount] = useState(0);
-
+  // useRef is used to store things that need to persist
+  // but do not need to update the screen
+  // - canvasRef stores the canvas element
+  // - gameRef stores the game instance
   const canvasRef = useRef(null);
   const gameRef = useRef(null);
 
   function restartGame() {
     setRestartCount((prev) => prev + 1);
   }
-
+  // useEffect controls what happens when the game starts, restarts, or changes mode
+  // it creates the game, listens to keyboard input,
+  // and cleans everything up when needed
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
