@@ -18,7 +18,3 @@ export const KIDS_CONFIG = {
   tileSize: 20,
   gameOverMessage: "Oops! Let's try again 🧸",
 };
-
-
-//TODO:
-//understand why initial speed is needed here if they are the same in both configs
