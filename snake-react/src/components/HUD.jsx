@@ -24,21 +24,24 @@ function HUD({ gameRef }) {
   }, [gameRef]);
 
   return (
-    <div className="hud">
-      {isGameOver ? (
-        <>
-          <p>Game Over</p>
-          <p>You reached Level {level}</p>
+  <div className="hud">
+    {isGameOver ? (
+      <div className="hud-game-over">
+        <h2>Game Over</h2>
+        <p>You reached Level {level}</p>
 
-          <button onClick={() => gameRef.current.restart()}>
-            Play Again
-          </button>
-        </>
-      ) : (
-        <p>Level: {level}</p>
-      )}
-    </div>
-  );
+        <button
+          className="hud-restart-button"
+          onClick={() => gameRef.current.restart()}
+        >
+          Play Again
+        </button>
+      </div>
+    ) : (
+      <p className="hud-level">Level: {level}</p>
+    )}
+  </div>
+);
 }
 
 export default HUD;
