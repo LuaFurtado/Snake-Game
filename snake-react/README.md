@@ -56,7 +56,6 @@ This separation allows the parent component to focus on game logic while child c
 
 ## 📁 Project Structure
 
-```text
 src/
 ├── assets/
 │   └── controls/

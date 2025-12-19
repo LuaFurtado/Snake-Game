@@ -1,5 +1,4 @@
 import { useRef, useEffect, useState } from "react";
-
 // useState: controls game mode and triggers re-renders
 // useRef: stores persistent objects (canvas and game engine)
 // useEffect: handles game setup, side effects, and cleanup
@@ -9,16 +8,16 @@ import HUD from "./HUD";
 import { CLASSIC_CONFIG, KIDS_CONFIG } from "../gameConfigs";
 
 
-/* ===== Colors ===== */
+// Colors
 const PINK_LIGHT = "#fce4ec";
 const PINK_HOT = "#ff0099";
 const GREEN_WICKED = "#1b5e20";
 
-/* ===== Canvas config ===== */
-//const tileSize = 10; it will now be provided by gamme configs
+// Canvas config
+// Const tileSize = 10; it will now be provided by gamme configs
 const canvasSize = 400;
 
-/* ===== Snake ===== */
+// Snake 
 class Snake {
   constructor(tileCountX, tileCountY, tileSize) {
     this.tileCountX = tileCountX;
@@ -74,7 +73,7 @@ class Snake {
 }
 
 
-/* ===== Food ===== */
+// Food
 class Food {
   constructor(tileCountX, tileCountY, snake, tileSize) {
     this.tileCountX = tileCountX;
@@ -113,7 +112,7 @@ class Food {
 }
 
 
-/* ===== Board ===== */
+// Board
 class Board {
   constructor(canvas, ctx) {
     this.canvas = canvas;
@@ -130,7 +129,7 @@ class Board {
   }
 }
 
-/* ===== Game ===== */
+// Game
 class Game {
   constructor(canvas, ctx, mode) {
     
@@ -226,7 +225,7 @@ class Game {
   }
 }
 
-/* ===== React Wrapper ===== */
+// React Wrapper
 function GameBoard() {
   const [mode, setMode] = useState("classic");
 

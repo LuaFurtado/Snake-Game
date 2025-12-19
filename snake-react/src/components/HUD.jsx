@@ -47,4 +47,3 @@ function HUD({ gameRef }) {
 }
 
 export default HUD;
-
