@@ -1,5 +1,4 @@
 /* Game Board Layout */
-
 .game-board-container {
   display: flex;
   flex-direction: column;
@@ -8,17 +7,13 @@
   position: relative;
 }
 
-
 /* Canvas */
-
 canvas {
   max-width: 90vw;
   background-color: #fce4ec;
 }
 
-
 /* Title */
-
 .title {
   margin-bottom: 1.5rem;
   text-align: center;
@@ -26,9 +21,7 @@ canvas {
   color: #ff0099;
 }
 
-
 /* Controls (Arrow Buttons) */
-
 .controls {
   display: grid;
   grid-template-columns: 48px 48px 48px;
@@ -68,14 +61,15 @@ canvas {
   height: auto;
 }
 
-/* Button feedback (mobile friendly) */
+/* Touch feedback for mobile:
+   Hover is mainly for desktop/mouse. On mobile, :active is what we can use to
+   show feedback while the user is pressing the button. */
 .controls button:active img {
   transform: scale(0.92);
 }
 
 
 /* HUD (Score / Level / Game Over) */
-
 .hud {
   display: flex;
   justify-content: space-between;
@@ -94,18 +88,17 @@ canvas {
 
 .hud-level {
   font-size: 1rem;
-  color: #1b5e20; /* wicked green */
+  color: #1b5e20;
 }
 
 .hud-game-over {
   font-size: 1rem;
-  color: #ff0099; /* hot pink */
+  color: #ff0099;
   animation: pulse 1.2s infinite;
 }
 
 
 /* Classic Mode Theme*/
-
 .game-board-container.classic canvas {
   background-color: #fce4ec;
 }
@@ -124,7 +117,6 @@ canvas {
 
 
 /* Kids Mode Theme */
-
 .game-board-container.kids {
   position: relative;
 }
@@ -171,7 +163,7 @@ canvas {
 }
 
 .game-board-container.kids .controls {
-  background-color: #fce4ec; /* mesmo rosa do canvas */
+  background-color: #fce4ec;
   padding: 0.75rem;
   border-radius: 14px;
 
