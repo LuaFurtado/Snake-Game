@@ -61,3 +61,31 @@ canvas {
   z-index: 10;
   position: relative;
 }
+
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+
+  font-weight: 600;
+}
+
+.hud-level {
+  font-size: 1rem;
+  color: #1b5e20; /* wicked green */
+}
+
+.hud-game-over {
+  font-size: 1rem;
+  color: #ff0099; /* hot pink */
+  animation: pulse 1.2s infinite;
+}
