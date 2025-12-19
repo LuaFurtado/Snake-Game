@@ -1,4 +1,7 @@
 import { useRef, useEffect, useState } from "react";
+// useState: controls game mode and triggers re-renders
+// useRef: stores persistent objects (canvas and game engine)
+// useEffect: handles game setup, side effects, and cleanup
 import "../App.css";
 import Controls from "./Controls";
 import HUD from "./HUD";
