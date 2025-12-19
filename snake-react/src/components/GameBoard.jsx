@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import "../App.css";
 import Controls from "./Controls";
 import HUD from "./HUD";
@@ -125,7 +125,7 @@ class Board {
 
 /* ===== Game ===== */
 class Game {
-  constructor(canvas, ctx, mode = "classic") {
+  constructor(canvas, ctx, mode) {
     const tileCountX = canvas.width / tileSize;
     const tileCountY = canvas.height / tileSize;
 
@@ -219,6 +219,8 @@ class Game {
 
 /* ===== React Wrapper ===== */
 function GameBoard() {
+  const [mode, setMode] = useState("classic");
+
   const canvasRef = useRef(null);
   const gameRef = useRef(null);
 
@@ -283,7 +285,7 @@ function GameBoard() {
       window.removeEventListener("keydown", handleKeyDown);
       game.running = false;
     };
-  }, []);
+  }, [mode]);
 
   return (
     <div className="game-board-container">
