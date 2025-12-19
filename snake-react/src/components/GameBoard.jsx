@@ -231,7 +231,7 @@ function GameBoard() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    const game = new Game(canvas, ctx, "classic");
+    const game = new Game(canvas, ctx, mode);
     gameRef.current = game;
 
     game.board.draw();
