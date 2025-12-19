@@ -173,9 +173,9 @@ class Game {
       if (this.foodEaten % 3 === 0) {
         this.level += 1;
         this.speed += 3;
-        console.log(
-  `LEVEL UP → level: ${this.level}, speed: ${this.speed}`
-);
+         console.log(
+          `LEVEL UP → level: ${this.level}, speed: ${this.speed}`
+        );
      }
       this.food.reset();
     }
