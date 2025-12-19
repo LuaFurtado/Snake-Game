@@ -298,7 +298,7 @@ function GameBoard() {
   }, [mode]);
 
   return (
-  <div className="game-board-container">
+  <div className={`game-board-container ${mode}`}>
     <HUD key={mode} gameRef={gameRef} />
 
     <div className="mode-buttons">

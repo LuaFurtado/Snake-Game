@@ -1,15 +1,23 @@
+/* Game Board Layout */
+
 .game-board-container {
-   display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  position: relative;
 }
 
+
+/* Canvas */
 
 canvas {
   max-width: 90vw;
   background-color: #fce4ec;
 }
+
+
+/* Title */
 
 .title {
   margin-bottom: 1.5rem;
@@ -17,6 +25,9 @@ canvas {
   font-size: 2rem;
   color: #ff0099;
 }
+
+
+/* Controls (Arrow Buttons) */
 
 .controls {
   display: grid;
@@ -57,11 +68,13 @@ canvas {
   height: auto;
 }
 
-.controls {
-  z-index: 10;
-  position: relative;
+/* Button feedback (mobile friendly) */
+.controls button:active img {
+  transform: scale(0.92);
 }
 
+
+/* HUD (Score / Level / Game Over) */
 
 .hud {
   display: flex;
@@ -90,54 +103,94 @@ canvas {
   animation: pulse 1.2s infinite;
 }
 
-.game-over-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Classic Mode Theme*/
 
-  z-index: 10;
+.game-board-container.classic canvas {
+  background-color: #fce4ec;
 }
 
-.game-over-card {
-  background: #fff;
-  padding: 2rem 2.5rem;
-  border-radius: 20px;
-  text-align: center;
-
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-}
-
-.game-over-card h2 {
-  margin-bottom: 1rem;
-  font-size: 2rem;
+.game-board-container.classic .title {
   color: #ff0099;
 }
 
-.game-over-card button {
-  background: #1b5e20;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.4rem;
-  border-radius: 999px;
-  font-size: 1rem;
-  cursor: pointer;
+.game-board-container.classic .hud {
+  background: rgba(255, 255, 255, 0.7);
 }
 
-.game-over-card button:hover {
-  background: #2e7d32;
+.game-board-container.classic .controls {
+  background: transparent;
 }
 
-.game-board-container {
+
+/* Kids Mode Theme */
+
+.game-board-container.kids {
   position: relative;
+}
+
+.game-board-container.kids canvas {
+  position: relative;
+  z-index: 1;
+  border-radius: 8px;
+}
+
+/* Rainbow glow */
+.game-board-container.kids::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    90deg,
+    #ff1744,
+    #ff9100,
+    #ffea00,
+    #00e676,
+    #2979ff,
+    #d500f9,
+    #ff1744
+  );
+
+  filter: blur(16px);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.mode-buttons {
+  background-color: #fce4ec;
+  padding: 0.5rem;
+  border-radius: 12px;
+
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  gap: 0.5rem;
+}
+
+.game-board-container.kids .controls {
+  background-color: #fce4ec; /* mesmo rosa do canvas */
+  padding: 0.75rem;
+  border-radius: 14px;
+
+  position: relative;
+  z-index: 2;
 }
 
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.7; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
