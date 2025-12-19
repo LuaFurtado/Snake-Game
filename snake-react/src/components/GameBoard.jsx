@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+
 // useState: controls game mode and triggers re-renders
 // useRef: stores persistent objects (canvas and game engine)
 // useEffect: handles game setup, side effects, and cleanup
@@ -6,6 +7,8 @@ import "../App.css";
 import Controls from "./Controls";
 import HUD from "./HUD";
 import { CLASSIC_CONFIG, KIDS_CONFIG } from "../gameConfigs";
+import GameOver from "./GameOver";
+
 
 
 
@@ -300,6 +303,13 @@ function GameBoard() {
   <div className="game-board-container">
     <HUD gameRef={gameRef} />
 
+    {gameRef.current?.gameOver && (
+      <GameOver
+        message={gameRef.current.config.gameOverMessage}
+        onRestart={() => gameRef.current.restart()}
+      />
+    )}
+
     <div className="mode-buttons">
       <button
         onClick={() => setMode("classic")}
@@ -325,6 +335,7 @@ function GameBoard() {
     <Controls gameRef={gameRef} />
   </div>
 );
+
 
 }
 
