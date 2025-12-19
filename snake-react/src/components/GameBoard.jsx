@@ -15,7 +15,7 @@ const PINK_HOT = "#ff0099";
 const GREEN_WICKED = "#1b5e20";
 
 /* ===== Canvas config ===== */
-const tileSize = 10;
+//const tileSize = 10; it will now be provided by gamme configs
 const canvasSize = 400;
 
 /* ===== Snake ===== */
@@ -129,16 +129,18 @@ class Board {
 /* ===== Game ===== */
 class Game {
   constructor(canvas, ctx, mode) {
-    const tileCountX = canvas.width / tileSize;
-    const tileCountY = canvas.height / tileSize;
-
+    
     this.canvas = canvas;
     this.ctx = ctx;
 
     this.config = mode === "kids" ? KIDS_CONFIG : CLASSIC_CONFIG;
+    this.tileSize = this.config.tileSize;
 
-    this.snake = new Snake(tileCountX, tileCountY);
-    this.food = new Food(tileCountX, tileCountY, this.snake);
+    const tileCountX = canvas.width / this.tileSize;
+    const tileCountY = canvas.height / this.tileSize;
+
+    this.snake = new Snake(tileCountX, tileCountY, this.tileSize);
+    this.food = new Food(tileCountX, tileCountY, this.snake, this.tileSize);
     this.board = new Board(canvas, ctx);
 
     this.level = 1;
